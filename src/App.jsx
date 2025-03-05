@@ -1,35 +1,37 @@
-import { useState } from 'react'
+import React, { useEffect, useState } from "react";
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
+import { fetchGames } from "./basketballApi";
 
 function App() {
-  const [count, setCount] = useState(0)
+  const [games, setGames] = useState([]);
+
+  useEffect(() => {
+    async function getGames() {
+      const data = await fetchGames("2019-11-23"); // Change date as needed
+      if (data) setGames(data.response); // API response format may vary
+    }
+
+    getGames();
+  }, []);
 
   return (
-    <>
-      <div>
-        <a href="https://vite.dev" target="_blank">
-          <img src={viteLogo} className="logo" alt="Vite logo" />
-        </a>
-        <a href="https://react.dev" target="_blank">
-          <img src={reactLogo} className="logo react" alt="React logo" />
-        </a>
-      </div>
-      <h1>Vite + React</h1>
-      <div className="card">
-        <button onClick={() => setCount((count) => count + 1)}>
-          count is {count}
-        </button>
-        <p>
-          Edit <code>src/App.jsx</code> and save to test HMR
-        </p>
-      </div>
-      <p className="read-the-docs">
-        Click on the Vite and React logos to learn more
-      </p>
-    </>
-  )
+    <div>
+      <h1>Basketball Games</h1>
+      <ul>
+        {games.length > 0 ? (
+          games.map((game) => (
+            <li key={game.id}>
+              {game.teams.home.name} vs {game.teams.away.name}
+            </li>
+          ))
+        ) : (
+          <p>Loading...</p>
+        )}
+      </ul>
+    </div>
+  );
 }
 
-export default App
+export default App;
