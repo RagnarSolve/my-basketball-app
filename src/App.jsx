@@ -1,16 +1,17 @@
 import React, { useEffect, useState } from "react";
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
-import './App.css'
-import { fetchGames } from "./basketballApi";
+import { fetchGames } from "./basketballApi.js";
 
 function App() {
   const [games, setGames] = useState([]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getGames() {
-      const data = await fetchGames("2019-11-23"); // Change date as needed
-      if (data) setGames(data.response); // API response format may vary
+      const data = await fetchGames("2023-10-12"); // Correct date format
+      if (data) {
+        setGames(data);
+      }
+      setLoading(false);
     }
 
     getGames();
@@ -18,18 +19,24 @@ function App() {
 
   return (
     <div>
-      <h1>Basketball Games</h1>
-      <ul>
-        {games.length > 0 ? (
-          games.map((game) => (
+      <h1>NBA Games on 2022-03-09</h1>
+      {loading ? (
+        <p>Loading...</p>
+      ) : games.length > 0 ? (
+        <ul>
+          {games.map((game) => (
             <li key={game.id}>
-              {game.teams.home.name} vs {game.teams.away.name}
+              <strong>{game.teams.home.name}</strong> ({game.scores.home.points ?? "N/A"}) 
+              vs 
+              <strong> {game.teams.away.name}</strong> ({game.scores.away.points ?? "N/A"})
+              <br />
+              <small>🏀 Status: {game.status.long}</small>
             </li>
-          ))
-        ) : (
-          <p>Loading...</p>
-        )}
-      </ul>
+          ))}
+        </ul>
+      ) : (
+        <p>No games found for this date.</p>
+      )}
     </div>
   );
 }

@@ -1,5 +1,5 @@
-const API_HOST = "v1.basketball.api-sports.io";
-const API_KEY = "XxXxXxXxXxXxXxXxXxXxXxXxXx"; // Replace with your actual key
+const API_HOST = "v2.nba.api-sports.io"; // Corrected API host
+const API_KEY = "71829c94597f42134c98a50abaecbbd5"; // Replace with your actual key
 
 export async function fetchGames(date) {
   try {
@@ -16,9 +16,10 @@ export async function fetchGames(date) {
     }
 
     const data = await response.json();
-    return data;
+    console.log("API Response:", data); // Debugging: Check the actual response structure
+    return data.response; // Extract only the relevant game data
   } catch (error) {
     console.error("Error fetching games:", error);
-    return null;
+    return [];
   }
 }
