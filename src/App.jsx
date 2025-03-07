@@ -2,12 +2,12 @@ import React, { useEffect, useState } from "react";
 import { fetchGames } from "./basketballApi";
 
 function App() {
-  const [games, setGames] = useState([]);
+  /* const [games, setGames] = useState([]);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     async function getGames() {
-      const data = await fetchGames("2025-03-05");
+      const data = await fetchGames("2025-03-07");
       setGames(data || []);
       setLoading(false);
     }
@@ -37,7 +37,7 @@ function App() {
         <p>No games found for this date.</p>
       )}
     </div>
-  );
+  ); */
 }
 
 export default App;
