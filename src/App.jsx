@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { fetchGames } from "./basketballApi.js";
+import { fetchGames } from "./basketballApi";
 
 function App() {
   const [games, setGames] = useState([]);
@@ -7,10 +7,8 @@ function App() {
 
   useEffect(() => {
     async function getGames() {
-      const data = await fetchGames("2023-10-12"); // Correct date format
-      if (data) {
-        setGames(data);
-      }
+      const data = await fetchGames("2025-03-05");
+      setGames(data || []);
       setLoading(false);
     }
 
@@ -19,20 +17,21 @@ function App() {
 
   return (
     <div>
-      <h1>NBA Games on 2022-03-09</h1>
+      <h1>NBA Games on 2025-03-05</h1>
       {loading ? (
         <p>Loading...</p>
       ) : games.length > 0 ? (
         <ul>
           {games.map((game) => (
-            <li key={game.id}>
-              <strong>{game.teams.home.name}</strong> ({game.scores.home.points ?? "N/A"}) 
-              vs 
-              <strong> {game.teams.away.name}</strong> ({game.scores.away.points ?? "N/A"})
-              <br />
-              <small>🏀 Status: {game.status.long}</small>
-            </li>
-          ))}
+  <div key={game.id}>
+    <h3>
+      {game.teams?.home?.name ?? "Unknown Team"} ({game.scores?.home?.points ?? "N/A"}) 
+       vs
+      {game.teams?.visitors?.name ?? "Unknown Team"} ({game.scores?.visitors?.points ?? "N/A"})
+    </h3>
+    <p>🏀 Status: {game.status?.long ?? "Unknown"}</p>
+  </div>
+))}
         </ul>
       ) : (
         <p>No games found for this date.</p>
