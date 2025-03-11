@@ -1,0 +1,16 @@
+
+#Hoops-title {
+    display: flex;
+    background-color: brown;
+    height: 5rem;
+    font-size: 3rem;
+    padding: 0.5rem;
+    gap: 1rem;
+    align-items: center;
+
+
+}
+img{
+    height: 3rem;
+    width: 3rem;
+}

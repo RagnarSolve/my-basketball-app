@@ -1,18 +1,13 @@
-import React, {use, useEffect, useState } from "react";
-import { fetchGames } from "./basketballApi";
-import { HomePage } from './HoopsWebsite/pages/HomePage'
+
+import MainContent from "./components/MainContent";
+
 
 function App() {
-
-  function HoopsSite() {
-    return <HomePage />;
-  }
-
-  if (true) {
-    return <HoopsSite />;
-  }
-  
-
+    return (
+        <div>
+            <MainContent />
+        </div>
+    );
 }
 
 export default App;
