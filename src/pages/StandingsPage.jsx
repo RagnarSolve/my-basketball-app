@@ -8,7 +8,7 @@ const StandingsPage = () => {
         fetchStandings().then(data => {
             console.log("Standings Data (Before Sorting):", data);
 
-            // ✅ Sort teams by most wins (Descending Order)
+            
             const sortedStandings = data.sort((a, b) => b.win.total - a.win.total);
 
             console.log("Standings Data (Sorted):", sortedStandings);

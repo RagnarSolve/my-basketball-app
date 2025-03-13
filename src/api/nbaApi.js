@@ -1,5 +1,5 @@
 const API_HOST = "api-nba-v1.p.rapidapi.com";
-const API_KEY = "fb5b97e76cmsh38082f281eee200p1b934djsn5c328e81464b"; // Replace with your actual key
+const API_KEY = "fb5b97e76cmsh38082f281eee200p1b934djsn5c328e81464b"; 
 
 const fetchNBAData = async (endpoint, params = {}) => {
     const url = new URL(`https://${API_HOST}/${endpoint}`);
@@ -33,3 +33,7 @@ export const fetchGames = (season = "2024") =>
     fetchNBAData("games", { season });
 export const fetchPlayersStats = (teamId = 1, season = "2024") => 
     fetchNBAData("players/statistics", { team: teamId, season });
+export const fetchLiveGames = () =>
+    fetchNBAData("games", { live: "all" });
+
+

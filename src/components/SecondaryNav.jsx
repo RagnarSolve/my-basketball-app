@@ -3,10 +3,10 @@ import "./SecondaryNav.css";
 export default function SecondaryNav({ setPage }) {
     return (
         <nav className="secondary-nav">
-            <button onClick={() => setPage("home")}>Home</button>
-            <button onClick={() => setPage("standings")}>Standings</button>
-            <button onClick={() => setPage("games")}>Game Results</button>
-            <button onClick={() => setPage("players")}>Player Stats</button>
+            <a href="#" onClick={() => setPage("home")}>Home</a>
+            <a href="#" onClick={() => setPage("standings")}>Standings</a>
+            <a href="#" onClick={() => setPage("games")}>Game Results</a>
+            <a href="#" onClick={() => setPage("players")}>Player Stats</a>
         </nav>
     );
 }

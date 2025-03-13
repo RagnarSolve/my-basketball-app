@@ -6,50 +6,64 @@ const GamesPage = () => {
 
     useEffect(() => {
         fetchGames().then(data => {
-            console.log("Full API Response:", data);
 
             if (Array.isArray(data) && data.length > 0) {
-                console.log("First Game Data:", JSON.stringify(data[0], null, 2)); // ✅ Debugging
-                setGames(data);
+
+                const sortedGames = data.sort((a, b) => new Date(b.date.start) - new Date(a.date.start));
+
+                const latestGames = {};
+                sortedGames.forEach(game => {
+                    const homeTeam = game?.teams?.home?.name;
+                    const awayTeam = game?.teams?.visitors?.name;
+                    const homeScore = game?.scores?.home?.points;
+                    const awayScore = game?.scores?.visitors?.points;
+
+                    if (homeTeam && awayTeam && homeScore !== null && awayScore !== null) {
+                        const teamKey = homeTeam;
+                        if (!latestGames[teamKey]) {
+                            latestGames[teamKey] = game;
+                        }
+                    }
+                });
+
+                setGames(Object.values(latestGames));
             } else {
-                console.error("Invalid Game Data Structure:", data);
+                console.error("Something went wrong", data);
             }
         });
     }, []);
 
-    if (!games.length) return <p>Loading game results...</p>;
+    if (!games.length) return <p>Loading latest completed game results...</p>;
 
     return (
         <div>
-            <h2>NBA Game Results (2024-25 Season)</h2>
-            <ol>
+            <h2>NBA Latest Game Results</h2>
+            
                 {games.map((game, index) => {
                     const homeTeam = game?.teams?.home?.name || "Unknown Team";
-                    const awayTeam = game?.teams?.visitors?.name || "Unknown Team"; // ✅ Fixed Away Team
+                    const awayTeam = game?.teams?.visitors?.name || "Unknown Team";
                     const homeScore = game?.scores?.home?.points ?? "N/A";
-                    const awayScore = game?.scores?.visitors?.points ?? "N/A"; // ✅ Fixed Away Score
+                    const awayScore = game?.scores?.visitors?.points ?? "N/A";
                     const gameDate = game?.date?.start ? new Date(game.date.start).toLocaleDateString() : "N/A";
 
-                    // Determine the winner
-                    let winner = "TBD";
+                    let winner;
                     if (homeScore !== "N/A" && awayScore !== "N/A") {
                         winner = homeScore > awayScore ? homeTeam : awayTeam;
                     }
 
                     return (
-                        <li key={index}>
+                        <div id="game-results" key={index}>
                             <strong>{homeTeam} vs {awayTeam}</strong> <br />
                             Date: {gameDate} <br />
                             Final Score: {homeScore} - {awayScore} <br />
                             Winner: <strong>{winner}</strong>
-                        </li>
+                        </div>
                     );
                 })}
-            </ol>
+            
         </div>
     );
 };
 
 export default GamesPage;
-
 
