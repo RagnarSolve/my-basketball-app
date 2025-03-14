@@ -7,6 +7,7 @@ export default function SecondaryNav({ setPage }) {
             <a href="#" onClick={() => setPage("standings")}>Standings</a>
             <a href="#" onClick={() => setPage("games")}>Game Results</a>
             <a href="#" onClick={() => setPage("players")}>Player Stats</a>
+            <a href="#" onClick={() => setPage("news")}>NBA News</a>
         </nav>
     );
 }
