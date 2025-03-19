@@ -35,8 +35,3 @@ export const fetchPlayersStats = (teamId = 1, season = "2024") =>
     fetchNBAData("players/statistics", { team: teamId, season });
 export const fetchLiveGames = () =>
     fetchNBAData("games", { live: "all" });
-
-
-
-
-

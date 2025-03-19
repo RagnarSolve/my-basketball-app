@@ -1,16 +1,22 @@
 
-#Hoops-title {
+#topbar{
     display: flex;
-    background-color: brown;
-    height: 5rem;
-    font-size: 3rem;
-    padding: 0.5rem;
-    gap: 1rem;
-    align-items: center;
-
-
+    background-color: black;
+    width: 100%;
+    height: auto;
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    position:relative;
+    left: 0;
+    right: 0;
+    
 }
-img{
-    height: 3rem;
-    width: 3rem;
+#topbar h1{
+    color: white;
+    margin-left: 20px;
 }
+#title-img{
+    object-fit: contain;
+}
+

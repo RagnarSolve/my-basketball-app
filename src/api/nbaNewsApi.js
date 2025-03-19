@@ -29,4 +29,3 @@ export const fetchNews = async (limit = 10) => {
         return [];
     }
 };
-
