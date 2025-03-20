@@ -4,6 +4,7 @@ import GamesPage from "../pages/GamesPage";
 import StandingsPage from "../pages/StandingsPage";
 import PlayerPage from "../pages/PlayerPage";
 import NewsPage from "../pages/NewsPage";
+import TransactionPage from "../pages/TransactionPage";
 import SecondaryNav from "./SecondaryNav"; 
 import PrimaryNav from "./PrimaryNav";
 import "./MainContent.css";
@@ -20,6 +21,7 @@ const MainContent = () => {
             {page === "games" && <GamesPage />}
             {page === "players" && <PlayerPage />}
             {page === "news" && <NewsPage />}
+            {page === "transactions" && <TransactionPage />}
         </div>
     );
 };
