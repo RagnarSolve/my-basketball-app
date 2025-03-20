@@ -2,6 +2,14 @@ const API_HOST = "api-basketball-nba.p.rapidapi.com";
 const API_KEY = "fb5b97e76cmsh38082f281eee200p1b934djsn5c328e81464b";
 
 const fetchTransactionsByTeamAndYear = async (teamId, year) => {
+    const cacheKey = `transactions_${teamId}_${year}`;
+    const cachedData = localStorage.getItem(cacheKey);
+
+    if (cachedData) {
+        console.log(`Using stored transactions for team ${teamId} in ${year}`);
+        return JSON.parse(cachedData);
+    }
+
     const url = `https://${API_HOST}/team/transactions?teamId=${teamId}&year=${year}`;
 
     try {
@@ -14,11 +22,11 @@ const fetchTransactionsByTeamAndYear = async (teamId, year) => {
         });
 
         const data = await response.json();
-
         const transactions = data?.data?.transactions || {};
         const allTransactions = Object.keys(transactions).flatMap((month) => transactions[month]);
 
-        
+        localStorage.setItem(cacheKey, JSON.stringify(allTransactions));
+
         return allTransactions;
     } catch (error) {
         console.error(`Error fetching transactions for team ${teamId} in ${year}:`, error);
