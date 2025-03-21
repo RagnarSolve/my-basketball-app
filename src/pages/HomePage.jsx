@@ -23,9 +23,9 @@ const HomePage = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 3000); // Change image every 3 seconds
+        }, 5000); // Change image every 3 seconds
 
-        return () => clearInterval(interval); // Cleanup on unmount
+        return () => clearInterval(interval); 
     }, []);
 
     return (
@@ -66,6 +66,7 @@ const HomePage = () => {
             ) : (
                 <p>No live games currently.</p>
             )}
+            
         </div>
     );
 };
