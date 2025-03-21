@@ -14,6 +14,7 @@ export default function SecondaryNav({ setPage }) {
                 <nav> <a href="#table" id="navSection" onClick={(e) => handleNavigation(e, "standings" )}><h3>Table</h3></a></nav>
                 <nav> <a href="#games" id="navSection" onClick={(e) => handleNavigation(e, "games" )}><h3>Games</h3></a></nav>
                 <nav> <a href="#news" id="navSection" onClick={(e) => handleNavigation(e, "news" )}><h3>News</h3></a></nav>
+                <nav> <a href="#transactions" id="navSection" onClick={(e) => handleNavigation(e, "transactions")}><h3>Transactions</h3></a></nav>
                 
         </nav>
     );
