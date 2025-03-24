@@ -3,20 +3,28 @@ import { fetchStandings } from "../api/nbaApi";
 
 const StandingsPage = () => {
     const [standings, setStandings] = useState([]);
+    const [error, setError] = useState(null);
+    const [loading, setLoading] = useState(true);
 
-    useEffect(() => {
-        fetchStandings().then(data => {
-            console.log("Standings Data (Before Sorting):", data);
-
-            
-            const sortedStandings = data.sort((a, b) => b.win.total - a.win.total);
-
-            console.log("Standings Data (Sorted):", sortedStandings);
+   useEffect(() => {
+    const loadingStandings = async () => {
+        try {
+            const data = await fetchStandings();
+            const sortedStandings = data.sort((a,b) => b.win.total - a.win.total);
             setStandings(sortedStandings);
-        });
-    }, []);
+        } catch (err) {
+            setError("Failed to load standings");
+            console.error("Error fetching standings:", err);
+        } finally {
+            setLoading(false);
+        }
+    };
+    loadingStandings();
+   }, []);
 
-    if (!standings.length) return <p>Loading standings...</p>;
+   if (loading) return <p>Loading standings...</p>
+   if (error) return <p>{error}</p>
+   if (!standings.length) return <p>No standings data available</p>
 
     return (
         <div>
