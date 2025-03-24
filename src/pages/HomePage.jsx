@@ -1,11 +1,20 @@
 import { useEffect, useState } from "react";
 import { fetchLiveGames } from "../api/nbaApi";
+import { fetchNews } from "../api/nbaNewsApi";
+
 
 const HomePage = () => {
     const [liveGames, setLiveGames] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    //for the news
+    const [news, setNews] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
 
     const images = [
+        "https://media.nbcsportsbayarea.com/2025/02/Steph-Curry-Warriors-Mavericks.jpg?quality=85&strip=all&resize=1200%2C675",
+        "https://www.bostonsportsjournal.com/img/Celtics/GettyImages-1247602519-1600x900.jpg",
         "https://library.sportingnews.com/styles/crop_style_16_9_desktop/s3/2025-02/GFX-1736%20NBA%20All%20Star%202025%20FTR%20package_FTR%20%231_0.jpg?itok=62EoVz5c",
         "https://gsp-image-cdn.wmsports.io/cms/prod/bleacher-report/getty_images/2198819600_large_image_0.jpg",
         "https://www.rollingstone.com/wp-content/uploads/2024/04/how-to-watch-lakers-vs-nuggets-nba-playoff-games-online-live-stream.jpg?w=1483&h=1054&crop=1"
@@ -23,16 +32,39 @@ const HomePage = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 5000); // Change image every 3 seconds
+        }, 5000); // Change image every 5 seconds
 
         return () => clearInterval(interval); 
     }, []);
 
-    return (
-        <div>
-            <h2>Welcome to the NBA Stats App</h2>
 
-            <div id="homePicture" style={{ position: "relative", width: "100%", maxWidth: "800px",height: "450px", overflow: "hidden" }}>
+
+    //news part
+    useEffect(() => {
+        const loadNews = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const articles = await fetchNews(10);
+                console.log("Received articles:", articles);
+                setNews(articles);
+            } catch (err) {
+                setError("Failed to fetch news. Please try again.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadNews();
+    }, []);
+    
+
+    return (
+        <div id="HomePage" style={{display:"flex", backgroundColor: "grey"}}>
+            
+
+            <div id="homePicture" style={{ position: "relative", width: "100%", maxWidth: "1000px",height: "550px", overflow: "hidden" }}>
                 {images.map((src, index) => (
                     <img
                         key={index}
@@ -49,6 +81,25 @@ const HomePage = () => {
                     />
                 ))}
             </div>
+
+            <div id="news">
+            <h2>NBA Latest News</h2>
+            {loading && <p>Loading news...</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            {!loading && !error && (
+                <ul>
+                    {news.map((article, index) => (
+                        <li key={index}>
+                            <h3>{article.title}</h3>
+                            <p><strong>Source:</strong> {article.source}</p>
+                            <a href={article.url} target="_blank">
+                                Read Full Article
+                            </a>
+                        </li>
+                    ))}
+                </ul>
+            )}
+        </div>
 
             <h3>Live NBA Games</h3>
             {liveGames.length > 0 ? (

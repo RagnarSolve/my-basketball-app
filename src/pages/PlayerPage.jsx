@@ -2,7 +2,7 @@ import { useEffect, useState, useCallback } from "react";
 import { fetchPlayersStats } from "../api/nbaApi";
 
 const teams = [
-  { id: 1, name: "Atlanta Hawks" }, { id: 2, name: "Boston Celtics" },
+  { id: 1, name: "Atlanta Hawks"}, { id: 2, name: "Boston Celtics" },
   { id: 4, name: "Brooklyn Nets" }, { id: 5, name: "Charlotte Hornets" },
   { id: 6, name: "Chicago Bulls" }, { id: 7, name: "Cleveland Cavaliers" },
   { id: 8, name: "Dallas Mavericks" }, { id: 9, name: "Denver Nuggets" },
