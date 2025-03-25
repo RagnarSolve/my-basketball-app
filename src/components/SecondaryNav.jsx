@@ -2,13 +2,13 @@ import "./SecondaryNav.css";
 
 /**
  * SecondaryNav är komponenten under PrimaryNav.
- * SecondaryNav är komponenten som innehåller alla länkar
+ * SecondaryNav är komponenten som innehåller alla länkar,
  * som användaren kan klick på och välja vilken sida man vill kolla på.
  *
  * @component
- * @param {Object} props - komponentens props
- * @param {(page: string) => void} props.setPage - funktion för att ändra sida.
- * @returns {JSX.Element} en meny med olika länkar.
+ * @param {Object} props - komponentens props.
+ * @param {function} props.setPage - funktion för att ändra sida.
+ * @returns {JSX.Element} en meny med olika länkar
  */
 export default function SecondaryNav({ setPage }) {
 

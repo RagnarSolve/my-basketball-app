@@ -2,7 +2,7 @@ const API_HOST = "api-basketball-nba.p.rapidapi.com";
 const API_KEY = "fb5b97e76cmsh38082f281eee200p1b934djsn5c328e81464b";
 
 /**
- * fetchar spelarövergångar och kontraktsförnyelser m.m. för ett specifikt lag och år.
+ * fetchar spelarövergångar och kontraktsändringar m.m. för ett specifikt lag och år.
  * Datan sparas i localStorage efter första hämtningen och uppdateras inte automatiskt,
  * till skillnad från funktionerna i nbaApi.js och nbaNewsApi.js som uppdateras efter en viss tid.
  *

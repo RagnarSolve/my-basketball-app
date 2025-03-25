@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { fetchNews } from "../api/nbaNewsApi";
 
+/**
+ * NewsPage fetchar de senaste nba-nyheterna från ett api.
+ * den fetchar nyheterna när sidan laddas och visar dem i en lista.
+ *
+ * @returns {JSX.Element} en komponent som visar nyhetsartiklar
+ */
 const NewsPage = () => {
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);

@@ -4,7 +4,7 @@ import { fetchNews } from "../api/nbaNewsApi";
 
 
 /**
- * HomePage är första sidan som sidan visar upp.
+ * HomePage är startsidan.
  * Den innehåller en bildslider, live-matcher, och de senaste nyheterna från nba.
  *
  * @returns {JSX.Element} startsidan med nyheter, bildslider och live-matcher
