@@ -27,13 +27,13 @@ const PlayerPage = () => {
     const data = await fetchPlayersStats(selectedTeam);
 
     if (Array.isArray(data) && data.length > 0) {
-      const latestTeamPlayers = {};
+      const playerStatsMap = {};
 
       data.forEach(stat => {
         const playerId = stat.player?.id;
 
-        if (!latestTeamPlayers[playerId]) {
-          latestTeamPlayers[playerId] = {
+        if (!playerStatsMap[playerId]) {
+          playerStatsMap[playerId] = {
             id: playerId,
             name: `${stat.player?.firstname || "Unknown"} ${stat.player?.lastname || ""}`.trim(),
             team: stat.team?.name || "Unknown",
@@ -47,15 +47,15 @@ const PlayerPage = () => {
           };
         }
 
-        latestTeamPlayers[playerId].gamesPlayed += 1;
-        latestTeamPlayers[playerId].totalPoints += stat.points ?? 0;
-        latestTeamPlayers[playerId].assists += stat.assists ?? 0;
-        latestTeamPlayers[playerId].rebounds += stat.totReb ?? 0;
-        latestTeamPlayers[playerId].steals += stat.steals ?? 0;
-        latestTeamPlayers[playerId].blocks += stat.blocks ?? 0;
+        playerStatsMap[playerId].gamesPlayed += 1;
+        playerStatsMap[playerId].totalPoints += stat.points ?? 0;
+        playerStatsMap[playerId].assists += stat.assists ?? 0;
+        playerStatsMap[playerId].rebounds += stat.totReb ?? 0;
+        playerStatsMap[playerId].steals += stat.steals ?? 0;
+        playerStatsMap[playerId].blocks += stat.blocks ?? 0;
       });
 
-      const formattedPlayers = Object.values(latestTeamPlayers)
+      const formattedPlayers = Object.values(playerStatsMap)
         .map(player => ({
           ...player,
           ppg: (player.gamesPlayed > 0 ? player.totalPoints / player.gamesPlayed : 0).toFixed(1),
