@@ -12,7 +12,7 @@ const NewsPage = () => {
             setError(null);
 
             try {
-                const articles = await fetchNews(10);
+                const articles = await fetchNews(20);
                 console.log("Received articles:", articles);
                 setNews(articles);
             } catch (err) {

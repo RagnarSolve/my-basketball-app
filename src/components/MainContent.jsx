@@ -9,6 +9,13 @@ import SecondaryNav from "./SecondaryNav";
 import PrimaryNav from "./PrimaryNav";
 import "./MainContent.css";
 
+/**
+ * maincontent är den centrala komponenten som ändras beroende på vilket menyval man klickar på i secondaryNav,
+ * PrimaryNav och SecondaryNav visas alltid oavsett vilket menyval man gör,
+ * det enda som ändras är innehållet som hämtas från api'et i respektive sida(pages)
+ *
+ * @returns {JSX.Element} huvudinnehållet med navigation och aktiv sidasom byts dynamiskt
+ */
 const MainContent = () => {
     const [page, setPage] = useState("home");
 

@@ -2,9 +2,12 @@ import "./PrimaryNav.css";
 import "./Layout.css";
 import "./SecondaryNav.css";
 
-
-
-
+/**
+ * PrimaryNav är den övre komponenten i sidan.
+ * Den visar titeln "Hoops" och en basketbild i toppmenyn.
+ *
+ * @returns {JSX.Element} En visuell toppmeny med sidans titel och bild
+ */
 export default function PrimaryNav() {
     return <>
    
