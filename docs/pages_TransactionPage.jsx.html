@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/TransactionPage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/TransactionPage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from "react";
+import { fetchTransactionByTeam } from "../api/nbaTransactionApi";
+
+const teams = [
+  { id: 1, name: "Atlanta Hawks" },
+  { id: 2, name: "Boston Celtics" },
+  { id: 4, name: "Brooklyn Nets" },
+  { id: 5, name: "Charlotte Hornets" },
+  { id: 6, name: "Chicago Bulls" },
+  { id: 7, name: "Cleveland Cavaliers" },
+  { id: 8, name: "Dallas Mavericks" },
+  { id: 9, name: "Denver Nuggets" },
+  { id: 10, name: "Detroit Pistons" },
+  { id: 11, name: "Golden State Warriors" },
+  { id: 14, name: "Houston Rockets" },
+  { id: 15, name: "Indiana Pacers" },
+  { id: 16, name: "LA Clippers" },
+  { id: 17, name: "Los Angeles Lakers" },
+  { id: 19, name: "Memphis Grizzlies" },
+  { id: 20, name: "Miami Heat" },
+  { id: 21, name: "Milwaukee Bucks" },
+  { id: 22, name: "Minnesota Timberwolves" },
+  { id: 23, name: "New Orleans Pelicans" },
+  { id: 24, name: "New York Knicks" },
+  { id: 25, name: "Oklahoma City Thunder" },
+  { id: 26, name: "Orlando Magic" },
+  { id: 27, name: "Philadelphia 76ers" },
+  { id: 28, name: "Phoenix Suns" },
+  { id: 29, name: "Portland Trail Blazers" },
+  { id: 30, name: "Sacramento Kings" },
+  { id: 31, name: "San Antonio Spurs" },
+  { id: 32, name: "Toronto Raptors" },
+  { id: 33, name: "Utah Jazz" },
+  { id: 34, name: "Washington Wizards" }
+];
+
+/**
+ * TransactionPage visar spelarövergångar och kontraktsändringar för ett valt nba-lag.
+ * användaren kan välja ett lag i en dropdown och se övergångar för åren 2024 och 2025.
+ * datan hämtas från ett api och visas sorterat efter datum.
+ *
+ * @returns {JSX.Element} en sida som visar övergånghistorik per lag och år
+ */
+const TransactionPage = () => {
+    const [selectedTeam, setSelectedTeam] = useState(1);
+    const [transactions2025, setTransactions2025] = useState([]);
+    const [transactions2024, setTransactions2024] = useState([]);
+    const [loading, setLoading] = useState(false);
+    const [error, setError] = useState(null);
+
+    useEffect(() => {
+        const getTransactions = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const { transactions2025, transactions2024 } = await fetchTransactionByTeam(selectedTeam);
+                
+                setTransactions2025(transactions2025);
+                setTransactions2024(transactions2024);
+            } catch (err) {
+                setError("Failed to load transactions.");
+                console.error("Error fetching transactions:", err);
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        getTransactions();
+    }, [selectedTeam]);
+
+    return (
+        &lt;div>
+            &lt;h1>Transactions History&lt;/h1>
+            &lt;p>Select a team to view transaction history.&lt;/p>
+
+            &lt;label>Team: &lt;/label>
+            &lt;select value={selectedTeam} onChange={(e) => setSelectedTeam(Number(e.target.value))}>
+                {teams.map((team) => (
+                    &lt;option key={team.id} value={team.id}>
+                        {team.name}
+                    &lt;/option>
+                ))}
+            &lt;/select>
+
+            {loading &amp;&amp; &lt;p>Loading transactions...&lt;/p>}
+
+            {error &amp;&amp; &lt;p style={{ color: "red" }}>{error}&lt;/p>}
+
+            &lt;h3>2025&lt;/h3>
+            {transactions2025.length > 0 ? (
+                &lt;>
+                    {transactions2025.map((trade, index) => (
+                        &lt;div key={index}>
+                            &lt;strong>{new Date(trade.date).toDateString()}&lt;/strong>: {trade.description}
+                        &lt;/div>
+                    ))}
+                &lt;/>
+            ) : (
+                !loading &amp;&amp; &lt;p>No trades found for this team in 2025.&lt;/p>
+            )}
+
+        
+            &lt;h3>2024&lt;/h3>
+            {transactions2024.length > 0 ? (
+                &lt;div>
+                    {transactions2024.map((trade, index) => (
+                        &lt;div key={index}>
+                            &lt;strong>{new Date(trade.date).toDateString()}&lt;/strong>: {trade.description}
+                        &lt;/div>
+                    ))}
+                &lt;/div>
+            ) : (
+                !loading &amp;&amp; &lt;p>No trades found for this team in 2024.&lt;/p>
+            )}
+        &lt;/div>
+    );
+};
+
+export default TransactionPage;</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#GamesPage">GamesPage</a></li><li><a href="global.html#HomePage">HomePage</a></li><li><a href="global.html#MainContent">MainContent</a></li><li><a href="global.html#NewsPage">NewsPage</a></li><li><a href="global.html#PlayerPage">PlayerPage</a></li><li><a href="global.html#StandingsPage">StandingsPage</a></li><li><a href="global.html#TransactionPage">TransactionPage</a></li><li><a href="global.html#fetchGames">fetchGames</a></li><li><a href="global.html#fetchLiveGames">fetchLiveGames</a></li><li><a href="global.html#fetchNBAData">fetchNBAData</a></li><li><a href="global.html#fetchNews">fetchNews</a></li><li><a href="global.html#fetchPlayersStats">fetchPlayersStats</a></li><li><a href="global.html#fetchStandings">fetchStandings</a></li><li><a href="global.html#fetchTransactionByTeam">fetchTransactionByTeam</a></li><li><a href="global.html#fetchTransactionsByTeamAndYear">fetchTransactionsByTeamAndYear</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Mar 25 2025 16:08:49 GMT+0100 (centraleuropeisk normaltid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

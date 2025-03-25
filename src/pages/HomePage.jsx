@@ -3,10 +3,15 @@ import { fetchLiveGames } from "../api/nbaApi";
 import { fetchNews } from "../api/nbaNewsApi";
 
 
+/**
+ * HomePage är startsidan.
+ * Den innehåller en bildslider, live-matcher, och de senaste nyheterna från nba.
+ *
+ * @returns {JSX.Element} startsidan med nyheter, bildslider och live-matcher
+ */
 const HomePage = () => {
     const [liveGames, setLiveGames] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
-    //for the news
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -32,21 +37,21 @@ const HomePage = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 5000); // Change image every 5 seconds
+        }, 5000); // Ändrar bild varje femte sekund.
 
         return () => clearInterval(interval); 
     }, []);
 
 
 
-    //news part
+    //nyhets-delen
     useEffect(() => {
         const loadNews = async () => {
             setLoading(true);
             setError(null);
 
             try {
-                const articles = await fetchNews(10);
+                const articles = await fetchNews(5);
                 console.log("Received articles:", articles);
                 setNews(articles);
             } catch (err) {

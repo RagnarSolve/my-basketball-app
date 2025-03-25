@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { fetchGames } from "../api/nbaApi";
 
+/**
+ * GamesPage är en sida som visar det senaste resultatet för varje nba-lag.
+ * den hämtar data från api'et, sorterar dem efter datum och filtrerar ut den senaste spelade matchen för varje lag.
+ *
+ * @returns {JSX.Element} en lista med de senaste matchresultaten för varje lag
+ */
 const GamesPage = () => {
     const [games, setGames] = useState([]);
 

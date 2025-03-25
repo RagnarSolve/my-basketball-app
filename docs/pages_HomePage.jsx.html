@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: pages/HomePage.jsx</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: pages/HomePage.jsx</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>import { useEffect, useState } from "react";
+import { fetchLiveGames } from "../api/nbaApi";
+import { fetchNews } from "../api/nbaNewsApi";
+
+
+/**
+ * HomePage är startsidan.
+ * Den innehåller en bildslider, live-matcher, och de senaste nyheterna från nba.
+ *
+ * @returns {JSX.Element} startsidan med nyheter, bildslider och live-matcher
+ */
+const HomePage = () => {
+    const [liveGames, setLiveGames] = useState([]);
+    const [currentIndex, setCurrentIndex] = useState(0);
+    const [news, setNews] = useState([]);
+    const [loading, setLoading] = useState(true);
+    const [error, setError] = useState(null);
+
+
+    const images = [
+        "https://media.nbcsportsbayarea.com/2025/02/Steph-Curry-Warriors-Mavericks.jpg?quality=85&amp;strip=all&amp;resize=1200%2C675",
+        "https://www.bostonsportsjournal.com/img/Celtics/GettyImages-1247602519-1600x900.jpg",
+        "https://library.sportingnews.com/styles/crop_style_16_9_desktop/s3/2025-02/GFX-1736%20NBA%20All%20Star%202025%20FTR%20package_FTR%20%231_0.jpg?itok=62EoVz5c",
+        "https://gsp-image-cdn.wmsports.io/cms/prod/bleacher-report/getty_images/2198819600_large_image_0.jpg",
+        "https://www.rollingstone.com/wp-content/uploads/2024/04/how-to-watch-lakers-vs-nuggets-nba-playoff-games-online-live-stream.jpg?w=1483&amp;h=1054&amp;crop=1"
+    ];
+
+    useEffect(() => {
+        const loadLiveGames = async () => {
+            const data = await fetchLiveGames();
+            setLiveGames(data);
+        };
+
+        loadLiveGames();
+    }, []);
+
+    useEffect(() => {
+        const interval = setInterval(() => {
+            setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
+        }, 5000); // Ändrar bild varje femte sekund.
+
+        return () => clearInterval(interval); 
+    }, []);
+
+
+
+    //nyhets-delen
+    useEffect(() => {
+        const loadNews = async () => {
+            setLoading(true);
+            setError(null);
+
+            try {
+                const articles = await fetchNews(5);
+                console.log("Received articles:", articles);
+                setNews(articles);
+            } catch (err) {
+                setError("Failed to fetch news. Please try again.");
+            } finally {
+                setLoading(false);
+            }
+        };
+
+        loadNews();
+    }, []);
+    
+
+    return (
+        &lt;div id="HomePage" style={{display:"flex", backgroundColor: "grey"}}>
+            
+
+            &lt;div id="homePicture" style={{ position: "relative", width: "100%", maxWidth: "1000px",height: "550px", overflow: "hidden" }}>
+                {images.map((src, index) => (
+                    &lt;img
+                        key={index}
+                        src={src}
+                        alt=""
+                        style={{
+                            width: "100%",
+                            height: "auto",
+                            objectFit: "cover",
+                            position: "absolute",
+                            opacity: index === currentIndex ? 1 : 0,
+                            transition: "opacity 1s ease-in-out"
+                        }}
+                    />
+                ))}
+            &lt;/div>
+
+            &lt;div id="news">
+            &lt;h2>NBA Latest News&lt;/h2>
+            {loading &amp;&amp; &lt;p>Loading news...&lt;/p>}
+            {error &amp;&amp; &lt;p style={{ color: "red" }}>{error}&lt;/p>}
+            {!loading &amp;&amp; !error &amp;&amp; (
+                &lt;ul>
+                    {news.map((article, index) => (
+                        &lt;li key={index}>
+                            &lt;h3>{article.title}&lt;/h3>
+                            &lt;p>&lt;strong>Source:&lt;/strong> {article.source}&lt;/p>
+                            &lt;a href={article.url} target="_blank">
+                                Read Full Article
+                            &lt;/a>
+                        &lt;/li>
+                    ))}
+                &lt;/ul>
+            )}
+        &lt;/div>
+
+            &lt;h3>Live NBA Games&lt;/h3>
+            {liveGames.length > 0 ? (
+                &lt;ul>
+                    {liveGames.map((game, index) => (
+                        &lt;li key={index}>
+                            {game.teams.home.name} vs {game.teams.visitors.name}
+                            &lt;br />
+                            Score: {game.scores.home.points} - {game.scores.visitors.points}
+                            &lt;br />
+                            Status: {game.status.long}
+                        &lt;/li>
+                    ))}
+                &lt;/ul>
+            ) : (
+                &lt;p>No live games currently.&lt;/p>
+            )}
+            
+        &lt;/div>
+    );
+};
+
+export default HomePage;
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#GamesPage">GamesPage</a></li><li><a href="global.html#HomePage">HomePage</a></li><li><a href="global.html#MainContent">MainContent</a></li><li><a href="global.html#NewsPage">NewsPage</a></li><li><a href="global.html#PlayerPage">PlayerPage</a></li><li><a href="global.html#StandingsPage">StandingsPage</a></li><li><a href="global.html#TransactionPage">TransactionPage</a></li><li><a href="global.html#fetchGames">fetchGames</a></li><li><a href="global.html#fetchLiveGames">fetchLiveGames</a></li><li><a href="global.html#fetchNBAData">fetchNBAData</a></li><li><a href="global.html#fetchNews">fetchNews</a></li><li><a href="global.html#fetchPlayersStats">fetchPlayersStats</a></li><li><a href="global.html#fetchStandings">fetchStandings</a></li><li><a href="global.html#fetchTransactionByTeam">fetchTransactionByTeam</a></li><li><a href="global.html#fetchTransactionsByTeamAndYear">fetchTransactionsByTeamAndYear</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Tue Mar 25 2025 16:08:49 GMT+0100 (centraleuropeisk normaltid)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

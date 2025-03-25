@@ -19,6 +19,16 @@ const teams = [
   { id: 40, name: "Utah Jazz" }, { id: 41, name: "Washington Wizards" }
 ];
 
+/**
+ * PlayerPage visar stats för spelare baserat på det lag användaren väljer.
+ * datan hämtas från ett api och sedan sammanställs det i snitt per spelare på en hel säsong,
+ * inklusive poäng, assists, returer, steals och blocks.
+ *
+ * användaren kan välja ett lag från en dropdown, 
+ * och då får man upp de 15 bästa spelarna baserat på PPG(points) som visas i en lista.
+ *
+ * @returns {JSX.Element} en komponent som visar spelarnas stats för ett specifikt valt lag.
+ */
 const PlayerPage = () => {
   const [playersStats, setPlayersStats] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState(teams[0].id);
@@ -27,13 +37,13 @@ const PlayerPage = () => {
     const data = await fetchPlayersStats(selectedTeam);
 
     if (Array.isArray(data) && data.length > 0) {
-      const latestTeamPlayers = {};
+      const playerStatsMap = {};
 
       data.forEach(stat => {
         const playerId = stat.player?.id;
 
-        if (!latestTeamPlayers[playerId]) {
-          latestTeamPlayers[playerId] = {
+        if (!playerStatsMap[playerId]) {
+          playerStatsMap[playerId] = {
             id: playerId,
             name: `${stat.player?.firstname || "Unknown"} ${stat.player?.lastname || ""}`.trim(),
             team: stat.team?.name || "Unknown",
@@ -47,15 +57,15 @@ const PlayerPage = () => {
           };
         }
 
-        latestTeamPlayers[playerId].gamesPlayed += 1;
-        latestTeamPlayers[playerId].totalPoints += stat.points ?? 0;
-        latestTeamPlayers[playerId].assists += stat.assists ?? 0;
-        latestTeamPlayers[playerId].rebounds += stat.totReb ?? 0;
-        latestTeamPlayers[playerId].steals += stat.steals ?? 0;
-        latestTeamPlayers[playerId].blocks += stat.blocks ?? 0;
+        playerStatsMap[playerId].gamesPlayed += 1;
+        playerStatsMap[playerId].totalPoints += stat.points ?? 0;
+        playerStatsMap[playerId].assists += stat.assists ?? 0;
+        playerStatsMap[playerId].rebounds += stat.totReb ?? 0;
+        playerStatsMap[playerId].steals += stat.steals ?? 0;
+        playerStatsMap[playerId].blocks += stat.blocks ?? 0;
       });
 
-      const formattedPlayers = Object.values(latestTeamPlayers)
+      const formattedPlayers = Object.values(playerStatsMap)
         .map(player => ({
           ...player,
           ppg: (player.gamesPlayed > 0 ? player.totalPoints / player.gamesPlayed : 0).toFixed(1),
