@@ -44,29 +44,29 @@ const GamesPage = () => {
     return (
         <div>
             <h2>NBA Latest Game Results</h2>
-            
-                {games.map((game, index) => {
-                    const homeTeam = game?.teams?.home?.name || "Unknown Team";
-                    const awayTeam = game?.teams?.visitors?.name || "Unknown Team";
-                    const homeScore = game?.scores?.home?.points ?? "N/A";
-                    const awayScore = game?.scores?.visitors?.points ?? "N/A";
-                    const gameDate = game?.date?.start ? new Date(game.date.start).toLocaleDateString() : "N/A";
 
-                    let winner;
-                    if (homeScore !== "N/A" && awayScore !== "N/A") {
-                        winner = homeScore > awayScore ? homeTeam : awayTeam;
-                    }
+            {games.map((game, index) => {
+                const homeTeam = game?.teams?.home?.name || "Unknown Team";
+                const awayTeam = game?.teams?.visitors?.name || "Unknown Team";
+                const homeScore = game?.scores?.home?.points ?? "N/A";
+                const awayScore = game?.scores?.visitors?.points ?? "N/A";
+                const gameDate = game?.date?.start ? new Date(game.date.start).toLocaleDateString() : "N/A";
 
-                    return (
-                        <div id="game-results" key={index}>
-                            <strong>{homeTeam} vs {awayTeam}</strong> <br />
-                            Date: {gameDate} <br />
-                            Final Score: {homeScore} - {awayScore} <br />
-                            Winner: <strong>{winner}</strong>
-                        </div>
-                    );
-                })}
-            
+                let winner;
+                if (homeScore !== "N/A" && awayScore !== "N/A") {
+                    winner = homeScore > awayScore ? homeTeam : awayTeam;
+                }
+
+                return (
+                    <div id="game-results" key={index}>
+                        <strong>{homeTeam} vs {awayTeam}</strong> <br />
+                        Date: {gameDate} <br />
+                        Final Score: {homeScore} - {awayScore} <br />
+                        Winner: <strong>{winner}</strong>
+                    </div>
+                );
+            })}
+
         </div>
     );
 };

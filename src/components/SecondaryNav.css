@@ -1,37 +1,29 @@
-/* .secondary-nav{
+.secondary-nav {
     display: flex;
-    gap: 1rem;
-    background-color:blueviolet;
-    font-size: 2rem;
-    padding: 0.5rem;
-    
-} */
-.secondary-nav{
-    display: flex;  
     flex-direction: row;
     background-color: #333;
     width: 100%;
     padding: 10px 0;
     justify-content: center;
-    gap:5rem
-    
+    gap: 5rem
 }
 
-.secondary-nav nav{
+.secondary-nav nav {
     margin: 0 15px;
 }
 
-#navSection{
+#navSection {
     text-decoration: none;
     color: white;
     padding: 5px 15px;
     border-radius: 5px;
-    transition:backgroud-color 5s;
+    transition: backgroud-color 5s;
 }
 
-#navSection:hover{
+#navSection:hover {
     background-color: #555;
 }
-.secondary-nav h3{
+
+.secondary-nav h3 {
     margin: 0;
 }

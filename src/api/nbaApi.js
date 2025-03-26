@@ -1,5 +1,5 @@
 const API_HOST = "api-nba-v1.p.rapidapi.com";
-const API_KEY = "fb5b97e76cmsh38082f281eee200p1b934djsn5c328e81464b"; 
+const API_KEY = "fb5b97e76cmsh38082f281eee200p1b934djsn5c328e81464b";
 const CACHE_EXPIRY = 24 * 60 * 60 * 1000; // refreshas efter 24 timmar
 
 

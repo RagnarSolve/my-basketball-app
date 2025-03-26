@@ -1,5 +1,4 @@
-
-#topbar{
+#topbar {
     display: flex;
     background-color: black;
     width: 100%;
@@ -7,16 +6,17 @@
     margin: 0;
     padding: 0;
     box-sizing: border-box;
-    position:relative;
+    position: relative;
     left: 0;
     right: 0;
-    
+
 }
-#topbar h1{
+
+#topbar h1 {
     color: white;
     margin-left: 20px;
 }
-#title-img{
+
+#title-img {
     object-fit: contain;
 }
-

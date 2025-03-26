@@ -39,7 +39,7 @@ const HomePage = () => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
         }, 5000); // Ändrar bild varje femte sekund.
 
-        return () => clearInterval(interval); 
+        return () => clearInterval(interval);
     }, []);
 
 
@@ -63,13 +63,13 @@ const HomePage = () => {
 
         loadNews();
     }, []);
-    
+
 
     return (
-        <div id="HomePage" style={{display:"flex", backgroundColor: "grey"}}>
-            
+        <div id="HomePage" style={{ display: "flex", backgroundColor: "grey" }}>
 
-            <div id="homePicture" style={{ position: "relative", width: "100%", maxWidth: "1000px",height: "550px", overflow: "hidden" }}>
+
+            <div id="homePicture" style={{ position: "relative", width: "100%", maxWidth: "1000px", height: "550px", overflow: "hidden" }}>
                 {images.map((src, index) => (
                     <img
                         key={index}
@@ -88,23 +88,23 @@ const HomePage = () => {
             </div>
 
             <div id="news">
-            <h2>NBA Latest News</h2>
-            {loading && <p>Loading news...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
-            {!loading && !error && (
-                <ul>
-                    {news.map((article, index) => (
-                        <li key={index}>
-                            <h3>{article.title}</h3>
-                            <p><strong>Source:</strong> {article.source}</p>
-                            <a href={article.url} target="_blank">
-                                Read Full Article
-                            </a>
-                        </li>
-                    ))}
-                </ul>
-            )}
-        </div>
+                <h2>NBA Latest News</h2>
+                {loading && <p>Loading news...</p>}
+                {error && <p style={{ color: "red" }}>{error}</p>}
+                {!loading && !error && (
+                    <ul>
+                        {news.map((article, index) => (
+                            <li key={index}>
+                                <h3>{article.title}</h3>
+                                <p><strong>Source:</strong> {article.source}</p>
+                                <a href={article.url} target="_blank">
+                                    Read Full Article
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                )}
+            </div>
 
             <h3>Live NBA Games</h3>
             {liveGames.length > 0 ? (
@@ -122,7 +122,7 @@ const HomePage = () => {
             ) : (
                 <p>No live games currently.</p>
             )}
-            
+
         </div>
     );
 };
