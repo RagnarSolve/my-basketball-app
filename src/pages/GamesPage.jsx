@@ -36,31 +36,43 @@ const GamesPage = () => {
     if (!games.length) return <p>Loading latest completed game results...</p>;
 
     return (
-        <div>
-            <h2>NBA Latest Game Results</h2>
-            
-                {games.map((game, index) => {
-                    const homeTeam = game?.teams?.home?.name || "Unknown Team";
-                    const awayTeam = game?.teams?.visitors?.name || "Unknown Team";
-                    const homeScore = game?.scores?.home?.points ?? "N/A";
-                    const awayScore = game?.scores?.visitors?.points ?? "N/A";
-                    const gameDate = game?.date?.start ? new Date(game.date.start).toLocaleDateString() : "N/A";
+        <div style={{display:"flex",backgroundColor:"lightgray", margin:"50px"}}>
 
-                    let winner;
-                    if (homeScore !== "N/A" && awayScore !== "N/A") {
-                        winner = homeScore > awayScore ? homeTeam : awayTeam;
-                    }
+            <div>
+                <img src="https://cdn.vox-cdn.com/thumbor/UysxoG72rBS8UrW2ejTawdNf_d4=/0x0:4896x3264/1200x800/filters:focal(2064x900:2846x1682)/cdn.vox-cdn.com/uploads/chorus_image/image/70959675/1241189476.0.jpg" alt="" width="600px" height="500px"/>
+                
+            </div>
 
-                    return (
-                        <div id="game-results" key={index}>
-                            <strong>{homeTeam} vs {awayTeam}</strong> <br />
-                            Date: {gameDate} <br />
-                            Final Score: {homeScore} - {awayScore} <br />
-                            Winner: <strong>{winner}</strong>
-                        </div>
-                    );
-                })}
+            <div style={{display:"grid", flexDirection:""}}>
+            <h2 style={{color:"brown", margin:"20px"}}>NBA Latest Game Results</h2>
             
+            {games.map((game, index) => {
+                const homeTeam = game?.teams?.home?.name || "Unknown Team";
+                const awayTeam = game?.teams?.visitors?.name || "Unknown Team";
+                const homeScore = game?.scores?.home?.points ?? "N/A";
+                const awayScore = game?.scores?.visitors?.points ?? "N/A";
+                const gameDate = game?.date?.start ? new Date(game.date.start).toLocaleDateString() : "N/A";
+
+                let winner;
+                if (homeScore !== "N/A" && awayScore !== "N/A") {
+                    winner = homeScore > awayScore ? homeTeam : awayTeam;
+                }
+
+                return (
+                    <div id="game-results" key={index} style={{margin:"2rem", backgroundColor:"burlywood"}}>
+                        <strong>{homeTeam} vs {awayTeam}</strong> <br />
+                        Date: {gameDate} <br />
+                        Final Score: {homeScore} - {awayScore} <br />
+                        Winner: <strong>{winner}</strong>
+                    </div>
+                );
+            })}
+        
+            </div>
+            {/* <div>
+                <img src="https://admin.sportshackster.com/WallPaperMedia/PlayerWallPaperImage/luka-23_63852447294315.4.jpg" alt="" />
+            </div>
+             */}
         </div>
     );
 };

@@ -61,10 +61,10 @@ const HomePage = () => {
     
 
     return (
-        <div id="HomePage" style={{display:"flex", backgroundColor: "grey"}}>
+        <div id="HomePage" style={{display:"flex", backgroundColor: "lightgray", margin: "50px"}}>
             
 
-            <div id="homePicture" style={{ position: "relative", width: "100%", maxWidth: "1000px",height: "550px", overflow: "hidden" }}>
+            <div id="homePicture" style={{ position: "relative", width: "100%", maxWidth: "1000px",height: "auto", overflow: "hidden" }}>
                 {images.map((src, index) => (
                     <img
                         key={index}
@@ -80,16 +80,18 @@ const HomePage = () => {
                         }}
                     />
                 ))}
+                
             </div>
+           
+            <div id="news" style={{display: "flex", margin:"2rem"}}>
 
-            <div id="news">
-            <h2>NBA Latest News</h2>
             {loading && <p>Loading news...</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
             {!loading && !error && (
                 <ul>
+                     <h2 style={{font:"500", color:"brown"}}>NBA Latest News</h2>
                     {news.map((article, index) => (
-                        <li key={index}>
+                        <li  key={index} style={{}}>
                             <h3>{article.title}</h3>
                             <p><strong>Source:</strong> {article.source}</p>
                             <a href={article.url} target="_blank">
@@ -101,22 +103,7 @@ const HomePage = () => {
             )}
         </div>
 
-            <h3>Live NBA Games</h3>
-            {liveGames.length > 0 ? (
-                <ul>
-                    {liveGames.map((game, index) => (
-                        <li key={index}>
-                            {game.teams.home.name} vs {game.teams.visitors.name}
-                            <br />
-                            Score: {game.scores.home.points} - {game.scores.visitors.points}
-                            <br />
-                            Status: {game.status.long}
-                        </li>
-                    ))}
-                </ul>
-            ) : (
-                <p>No live games currently.</p>
-            )}
+          
             
         </div>
     );

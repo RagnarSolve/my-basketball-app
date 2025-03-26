@@ -78,40 +78,48 @@ const PlayerPage = () => {
   }, [selectedTeam, loadPlayerStats]);
 
   return (
-    <div>
-      <h2>NBA Player Stats (2024 Season)</h2>
+    <div style={{ display:"flex", backgroundColor: "lightgray", margin: "50px"}}>
+      <div>
+        <img src="https://mir-s3-cdn-cf.behance.net/project_modules/hd/dd6b9795847219.5ea0ca5e4f6ef.jpg" alt="" width="550px"
+        height="900px"  />
+      </div>
 
-      <label htmlFor="teamSelect">Select a Team: </label>
-      <select
-        id="teamSelect"
-        value={selectedTeam}
-        onChange={(e) => setSelectedTeam(Number(e.target.value))}
-      >
-        {teams.map((team) => (
-          <option key={team.id} value={team.id}>
-            {team.name}
-          </option>
-        ))}
-      </select>
+      <div style={{backgroundColor: "white", margin:"2rem", width:"50%", justifyContent:"center"}}>
+      <h2 style={{color:"brown", margin:"20px"}}>NBA Player Stats (2024 Season)</h2>
 
-      {playersStats.length === 0 ? (
-        <p>Loading player stats...</p>
-      ) : (
-        <ul>
-          {playersStats.map((player, index) => (
-            <li key={index}>
-              <strong>{player.name}</strong> <br />
-              Team: {player.team} <br />
-              Position: {player.position} <br />
-              PPG: {player.ppg} <br />
-              Assists per game: {player.assistsPerGame} <br />
-              Rebounds per game: {player.reboundsPerGame} <br />
-              Steals per game: {player.stealsPerGame} <br />
-              Blocks per game: {player.blocksPerGame} <br />
-            </li>
-          ))}
-        </ul>
-      )}
+<label htmlFor="teamSelect">Select a Team: </label>
+<select
+  id="teamSelect"
+  value={selectedTeam}
+  onChange={(e) => setSelectedTeam(Number(e.target.value))}
+>
+  {teams.map((team) => (
+    <option key={team.id} value={team.id}>
+      {team.name}
+    </option>
+  ))}
+</select>
+
+{playersStats.length === 0 ? (
+  <p>Loading player stats...</p>
+) : (
+  <ul>
+    {playersStats.map((player, index) => (
+      <li key={index} style={{gap:"2 rem", color:"black", margin:"20px"}} >
+        <strong>{player.name}</strong> <br />
+        Team: {player.team} <br />
+        Position: {player.position} <br />
+        PPG: {player.ppg} <br />
+        Assists per game: {player.assistsPerGame} <br />
+        Rebounds per game: {player.reboundsPerGame} <br />
+        Steals per game: {player.stealsPerGame} <br />
+        Blocks per game: {player.blocksPerGame} <br />
+      </li>
+    ))}
+  </ul>
+)}
+      </div>
+      
     </div>
   );
 };

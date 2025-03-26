@@ -27,15 +27,23 @@ const StandingsPage = () => {
    if (!standings.length) return <p>No standings data available</p>
 
     return (
-        <div>
-            <h2>NBA Standings (2024-25)</h2>
+        <div style={{ display:"flex", backgroundColor: "lightgray", margin: "50px"}}>
+
+<div style={{margin:"50px"}}>
+    <img src="https://wallpapers.com/images/featured/nba-team-logos-xm3mg9l8k2a11mic.jpg" alt="" width="" height="700px"
+ />
+</div>
+            <div style={{width:"100%", textAlign:"center"}}>
+            <h2 style={{color:"brown", margin:"20px"}}>NBA Standings (2024-25)</h2>
             <ol> 
                 {standings.map((team, index) => (
-                    <li key={index}>
+                    <li key={index} style={{ color:"black", backgroundColor:"beige", margin:"20px",  textAlign:"center", justifyContent:"center"}}>
                         {team.team.name} - {team.win.total} Wins, {team.loss.total} Losses
                     </li>
                 ))}
             </ol>
+            </div>
+           
         </div>
     );
 };
