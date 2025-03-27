@@ -5,7 +5,11 @@
     width: 100%;
     padding: 10px 0;
     justify-content: center;
-    gap: 5rem
+    gap: 5rem;
+    position: fixed; 
+    top: 150px; 
+    left: 0;
+    z-index: 999;
 }
 
 .secondary-nav nav {

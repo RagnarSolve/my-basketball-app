@@ -1,14 +1,15 @@
 #topbar {
     display: flex;
-    background-color: black;
-    width: 100%;
-    height: auto;
-    margin: 0;
-    padding: 0;
-    box-sizing: border-box;
-    position: relative;
-    left: 0;
-    right: 0;
+  background-color: black;
+  width: 100%;
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
 
 }
 

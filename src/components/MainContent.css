@@ -1,3 +1,7 @@
 #homePage {
     display: flex;
 }
+
+.main-content {
+    padding-top: 120px;
+  }
