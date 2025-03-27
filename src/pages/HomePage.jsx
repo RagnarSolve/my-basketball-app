@@ -1,6 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchLiveGames } from "../api/nbaApi";
 import { fetchNews } from "../api/nbaNewsApi";
+import './styles/HomePage.css';
 
 
 /**
@@ -66,7 +67,7 @@ const HomePage = () => {
 
 
     return (
-        <div id="HomePage" style={{ display: "flex", backgroundColor: "grey" }}>
+        <div id="HomePage">
 
 
             <div id="homePicture" style={{ position: "relative", width: "100%", maxWidth: "1000px", height: "550px", overflow: "hidden" }}>
@@ -105,7 +106,6 @@ const HomePage = () => {
                     </ul>
                 )}
             </div>
-
             <h3>Live NBA Games</h3>
             {liveGames.length > 0 ? (
                 <ul>

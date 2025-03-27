@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchTransactionByTeam } from "../api/nbaTransactionApi";
+import './styles/TransactionPage.css';
 
 const teams = [
     { id: 1, name: "Atlanta Hawks" },
@@ -70,11 +71,11 @@ const TransactionPage = () => {
     }, [selectedTeam]);
 
     return (
-        <div>
+        <div id="TransactionPage">
             <h1>Transactions History</h1>
-            <p>Select a team to view transaction history.</p>
+           
 
-            <label>Team: </label>
+            <label>Select a team to view transaction history.</label>
             <select value={selectedTeam} onChange={(e) => setSelectedTeam(Number(e.target.value))}>
                 {teams.map((team) => (
                     <option key={team.id} value={team.id}>
@@ -91,7 +92,7 @@ const TransactionPage = () => {
             {transactions2025.length > 0 ? (
                 <>
                     {transactions2025.map((trade, index) => (
-                        <div key={index}>
+                        <div key={index} className="transaction">
                             <strong>{new Date(trade.date).toDateString()}</strong>: {trade.description}
                         </div>
                     ))}
@@ -105,7 +106,7 @@ const TransactionPage = () => {
             {transactions2024.length > 0 ? (
                 <div>
                     {transactions2024.map((trade, index) => (
-                        <div key={index}>
+                        <div key={index} className="transaction">
                             <strong>{new Date(trade.date).toDateString()}</strong>: {trade.description}
                         </div>
                     ))}

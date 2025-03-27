@@ -1,0 +1,59 @@
+#GamesPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f7f9fc;
+    padding: 20px;
+    gap: 20px;
+}
+
+
+#GamesPage h2 {
+    font-size: 2rem;
+    color: #222;
+    margin-bottom: 10px;
+}
+
+
+.game-result {
+    background-color: #ffffff;
+    width: 100%;
+    max-width: 700px;
+    border-radius: 10px;
+    padding: 15px;
+    box-shadow: 0 3px 6px rgba(0,0,0,0.2);
+    margin-bottom: 10px;
+    text-align: center;
+    line-height: 1.6;
+    transition: all 0.3s ease;
+}
+
+
+.game-result h3,
+.game-result p,
+#GamesPage h2 {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px; 
+}
+
+
+.game-result h3 {
+    font-size: 1.3rem;
+}
+
+
+.game-result p {
+    color: #555;
+    font-size: 1rem;
+}
+
+.game-result p strong {
+    color: #111;
+}
+
+
+.game-result p:last-child strong {
+    color: #388e3c;
+}

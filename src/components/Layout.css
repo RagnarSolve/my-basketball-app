@@ -6,13 +6,6 @@
      width: 100%;
  }
 
-
-
- h2 {
-     font-size: 24px;
-     color: #333;
- }
-
  #homePicture {
      display: flex;
      justify-content: center;

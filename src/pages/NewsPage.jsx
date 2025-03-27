@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchNews } from "../api/nbaNewsApi";
+import './styles/NewsPage.css';
 
 /**
  * NewsPage fetchar de senaste nba-nyheterna från ett api.
@@ -32,7 +33,7 @@ const NewsPage = () => {
     }, []);
 
     return (
-        <div>
+        <div id="NewsPage">
             <h2>NBA Latest News</h2>
             {loading && <p>Loading news...</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}

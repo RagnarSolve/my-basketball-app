@@ -1,0 +1,61 @@
+#TransactionPage {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background-color: #f7f9fc;
+    padding: 20px;
+    gap: 20px;
+  }
+  
+  #TransactionPage h1 {
+    font-size: 2.5rem;
+    color: #222;
+    margin-bottom: 10px;
+  }
+  
+  #TransactionPage p {
+    font-size: 1.1rem;
+    color: #555;
+    text-align: center;
+  }
+  
+  #TransactionPage label {
+    font-size: 1.2rem;
+    color: #333;
+  }
+  
+  #TransactionPage select {
+    font-size: 1.1rem;
+    padding: 6px 12px;
+    border-radius: 5px;
+    border: 1px solid #ccc;
+    margin-bottom: 20px;
+  }
+  
+  #TransactionPage h3 {
+    font-size: 1.8rem;
+    color: #000000;
+    margin-top: 20px;
+    text-align: center;
+  }
+  
+ 
+  .transaction {
+    background-color: #ffffff;
+    padding: 15px;
+    border-radius: 8px;
+    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
+    width: 100%;
+    max-width: 700px;
+    margin-bottom: 12px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+  }
+  
+  .transaction:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  }
+  
+  .transaction strong {
+    color: #000000;
+  }

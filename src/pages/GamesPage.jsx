@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchGames } from "../api/nbaApi";
+import './styles/GamesPage.css';
+
 
 /**
  * GamesPage är en sida som visar det senaste resultatet för varje nba-lag.
@@ -42,8 +44,8 @@ const GamesPage = () => {
     if (!games.length) return <p>Loading latest completed game results...</p>;
 
     return (
-        <div>
-            <h2>NBA Latest Game Results</h2>
+        <div id= "GamesPage">
+            <h2>🏀 NBA Latest Game Results</h2>
 
             {games.map((game, index) => {
                 const homeTeam = game?.teams?.home?.name || "Unknown Team";
@@ -58,11 +60,11 @@ const GamesPage = () => {
                 }
 
                 return (
-                    <div id="game-results" key={index}>
-                        <strong>{homeTeam} vs {awayTeam}</strong> <br />
-                        Date: {gameDate} <br />
-                        Final Score: {homeScore} - {awayScore} <br />
-                        Winner: <strong>{winner}</strong>
+                    <div className="game-result" key={index}>
+                        <h3> {homeTeam} vs {awayTeam}</h3>
+                        <p>📅 <strong>Date:</strong> {gameDate}</p>
+                        <p>📊 <strong>Final Score:</strong> {homeScore} - {awayScore}</p>
+                        <p>🏆 <strong>Winner:</strong> {winner}</p>
                     </div>
                 );
             })}

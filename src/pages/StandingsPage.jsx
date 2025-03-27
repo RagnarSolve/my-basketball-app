@@ -1,5 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchStandings } from "../api/nbaApi";
+import './styles/StandingsPage.css';
 
 /**
  * StandingsPage visar nba-tabellen för säsongen 2024–25.
@@ -33,7 +34,7 @@ const StandingsPage = () => {
     if (!standings.length) return <p>No standings data available</p>
 
     return (
-        <div>
+        <div id = "StandingsPage">
             <h2>NBA Standings (2024-25)</h2>
             <ol>
                 {standings.map((team, index) => (

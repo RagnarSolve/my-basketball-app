@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { fetchPlayersStats } from "../api/nbaApi";
+import './styles/PlayerPage.css';
 
 const teams = [
   { id: 1, name: "Atlanta Hawks" }, { id: 2, name: "Boston Celtics" },
@@ -88,7 +89,7 @@ const PlayerPage = () => {
   }, [selectedTeam, loadPlayerStats]);
 
   return (
-    <div>
+    <div id = "PlayerPage">
       <h2>NBA Player Stats (2024 Season)</h2>
 
       <label htmlFor="teamSelect">Select a Team: </label>
