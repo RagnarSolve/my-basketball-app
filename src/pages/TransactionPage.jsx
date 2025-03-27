@@ -63,8 +63,10 @@ const TransactionPage = () => {
     }, [selectedTeam]);
 
     return (
-        <div>
-            <h1>Transactions History</h1>
+        <div style={{backgroundColor:"gray", display:"flex"}}>
+ <div style={{ backgroundColor: "lightgray", margin: "50px", width:"80%"}}>
+    <div id="trade" style={{margin:"2rem", backgroundColor:""}}>
+    <h1>Transactions History</h1>
             <p>Select a team to view transaction history.</p>
 
             <label>Team: </label>
@@ -84,8 +86,8 @@ const TransactionPage = () => {
             {transactions2025.length > 0 ? (
                 <>
                     {transactions2025.map((trade, index) => (
-                        <div key={index}>
-                            <strong>{new Date(trade.date).toDateString()}</strong>: {trade.description}
+                        <div key={index} style={{width:"", margin: "10px"}}>
+                            <strong style={{margin:"2rem", color:"green"}}>{new Date(trade.date).toDateString()}</strong>: {trade.description}
                         </div>
                     ))}
                 </>
@@ -98,15 +100,23 @@ const TransactionPage = () => {
             {transactions2024.length > 0 ? (
                 <div>
                     {transactions2024.map((trade, index) => (
-                        <div key={index}>
-                            <strong>{new Date(trade.date).toDateString()}</strong>: {trade.description}
+                        <div key={index} style={{width:"", margin: "10px"}}>
+                            <strong style={{margin:"2rem", color:"green"}}>{new Date(trade.date).toDateString()}</strong>: {trade.description}
                         </div>
                     ))}
                 </div>
             ) : (
                 !loading && <p>No trades found for this team in 2024.</p>
             )}
+    </div>
+           
         </div>
+
+        <div>
+            <img src="https://spain.id.nba.com/storage/images/wallpapers/1714130685.jpg" alt="" width="500px" height="auto"/>
+        </div>
+        </div>
+       
     );
 };
 

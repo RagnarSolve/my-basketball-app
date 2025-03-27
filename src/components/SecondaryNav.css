@@ -13,8 +13,9 @@
     width: 100%;
     padding: 10px 0;
     justify-content: center;
-    gap:5rem
+    gap:5rem;
     
+    top: 154px;
 }
 
 .secondary-nav nav{

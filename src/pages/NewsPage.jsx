@@ -26,14 +26,14 @@ const NewsPage = () => {
     }, []);
 
     return (
-        <div>
+        <div style={{ backgroundColor: "lightgray", margin: "50px"}}>
             <h2>NBA Latest News</h2>
             {loading && <p>Loading news...</p>}
             {error && <p style={{ color: "red" }}>{error}</p>}
             {!loading && !error && (
                 <ul>
                     {news.map((article, index) => (
-                        <li key={index}>
+                        <li key={index} style={{backgroundColor:"white"}}>
                             <h3>{article.title}</h3>
                             <p><strong>Source:</strong> {article.source}</p>
                             <a href={article.url} target="_blank">
@@ -43,6 +43,10 @@ const NewsPage = () => {
                     ))}
                 </ul>
             )}
+
+            <div>
+                <img src="https://cdn.nba.com/manage/2023/06/jokic-murray061223.jpg" alt="" width="500px" height="400px"/>
+            </div>
         </div>
     );
 };
