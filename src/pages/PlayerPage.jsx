@@ -1,125 +1,132 @@
-import { useEffect, useState, useCallback } from "react";
+import { useEffect, useState } from "react";
 import { fetchPlayersStats } from "../api/nbaApi";
 
 const teams = [
-  { id: 1, name: "Atlanta Hawks"}, { id: 2, name: "Boston Celtics" },
-  { id: 4, name: "Brooklyn Nets" }, { id: 5, name: "Charlotte Hornets" },
-  { id: 6, name: "Chicago Bulls" }, { id: 7, name: "Cleveland Cavaliers" },
-  { id: 8, name: "Dallas Mavericks" }, { id: 9, name: "Denver Nuggets" },
-  { id: 10, name: "Detroit Pistons" }, { id: 11, name: "Golden State Warriors" },
-  { id: 14, name: "Houston Rockets" }, { id: 15, name: "Indiana Pacers" },
-  { id: 16, name: "LA Clippers" }, { id: 17, name: "Los Angeles Lakers" },
-  { id: 19, name: "Memphis Grizzlies" }, { id: 20, name: "Miami Heat" },
-  { id: 21, name: "Milwaukee Bucks" }, { id: 22, name: "Minnesota Timberwolves" },
-  { id: 23, name: "New Orleans Pelicans" }, { id: 24, name: "New York Knicks" },
-  { id: 25, name: "Oklahoma City Thunder" }, { id: 26, name: "Orlando Magic" },
-  { id: 27, name: "Philadelphia 76ers" }, { id: 28, name: "Phoenix Suns" },
-  { id: 29, name: "Portland Trail Blazers" }, { id: 30, name: "Sacramento Kings" },
-  { id: 31, name: "San Antonio Spurs" }, { id: 38, name: "Toronto Raptors" },
-  { id: 40, name: "Utah Jazz" }, { id: 41, name: "Washington Wizards" }
+  { id: 1, name: "Atlanta Hawks", logo: "https://cdn.nba.com/logos/nba/1610612737/primary/L/logo.svg" },
+  { id: 2, name: "Boston Celtics", logo: "https://cdn.nba.com/logos/nba/1610612738/primary/L/logo.svg"  },
+  { id: 4, name: "Brooklyn Nets", logo: "https://cdn.nba.com/logos/nba/1610612751/primary/L/logo.svg"  },
+  { id: 5, name: "Charlotte Hornets", logo: "https://cdn.nba.com/logos/nba/1610612766/primary/L/logo.svg"  },
+  { id: 6, name: "Chicago Bulls", logo: "https://cdn.nba.com/logos/nba/1610612741/primary/L/logo.svg" },
+  { id: 7, name: "Cleveland Cavaliers", logo: "https://cdn.nba.com/logos/nba/1610612739/primary/L/logo.svg" },
+  { id: 8, name: "Dallas Mavericks", logo: "https://cdn.nba.com/logos/nba/1610612742/primary/L/logo.svg" },
+  { id: 9, name: "Denver Nuggets", logo: "https://cdn.nba.com/logos/nba/1610612743/primary/L/logo.svg" },
+  { id: 10, name: "Detroit Pistons", logo: "https://cdn.nba.com/logos/nba/1610612765/primary/L/logo.svg" },
+  { id: 11, name: "Golden State Warriors", logo: "https://cdn.nba.com/logos/nba/1610612744/primary/L/logo.svg" },
+  { id: 14, name: "Houston Rockets", logo: "https://cdn.nba.com/logos/nba/1610612745/primary/L/logo.svg" },
+  { id: 15, name: "Indiana Pacers", logo: "https://cdn.nba.com/logos/nba/1610612754/primary/L/logo.svg" },
+  { id: 16, name: "LA Clippers", logo: "https://cdn.nba.com/logos/nba/1610612746/primary/L/logo.svg" },
+  { id: 17, name: "Los Angeles Lakers", logo: "https://cdn.nba.com/logos/nba/1610612747/primary/L/logo.svg" },
+  { id: 19, name: "Memphis Grizzlies", logo: "https://cdn.nba.com/logos/nba/1610612763/primary/L/logo.svg" },
+  { id: 20, name: "Miami Heat", logo: "https://cdn.nba.com/logos/nba/1610612748/primary/L/logo.svg" },
+  { id: 21, name: "Milwaukee Bucks", logo: "https://cdn.nba.com/logos/nba/1610612749/primary/L/logo.svg" },
+  { id: 22, name: "Minnesota Timberwolves", logo: "https://cdn.nba.com/logos/nba/1610612750/primary/L/logo.svg" },
+  { id: 23, name: "New Orleans Pelicans", logo: "https://cdn.nba.com/logos/nba/1610612740/primary/L/logo.svg" },
+  { id: 24, name: "New York Knicks", logo: "https://cdn.nba.com/logos/nba/1610612752/primary/L/logo.svg" },
+  { id: 25, name: "Oklahoma City Thunder", logo: "https://cdn.nba.com/logos/nba/1610612760/primary/L/logo.svg" },
+  { id: 26, name: "Orlando Magic", logo: "https://cdn.nba.com/logos/nba/1610612753/primary/L/logo.svg" },
+  { id: 27, name: "Philadelphia 76ers", logo: "https://cdn.nba.com/logos/nba/1610612755/primary/L/logo.svg" },
+  { id: 28, name: "Phoenix Suns", logo: "https://cdn.nba.com/logos/nba/1610612756/primary/L/logo.svg" },
+  { id: 29, name: "Portland Trail Blazers", logo: "https://cdn.nba.com/logos/nba/1610612757/primary/L/logo.svg" },
+  { id: 30, name: "Sacramento Kings", logo: "https://cdn.nba.com/logos/nba/1610612758/primary/L/logo.svg" },
+  { id: 31, name: "San Antonio Spurs", logo: "https://cdn.nba.com/logos/nba/1610612759/primary/L/logo.svg" },
+  { id: 32, name: "Toronto Raptors", logo: "https://cdn.nba.com/logos/nba/1610612761/primary/L/logo.svg" },
+  { id: 33, name: "Utah Jazz", logo: "https://cdn.nba.com/logos/nba/1610612762/primary/L/logo.svg" },
+  { id: 34, name: "Washington Wizards", logo: "https://cdn.nba.com/logos/nba/1610612764/primary/L/logo.svg" }
 ];
 
-/**
- * PlayerPage visar stats för spelare baserat på det lag användaren väljer.
- * datan hämtas från ett api och sedan sammanställs det i snitt per spelare på en hel säsong,
- * inklusive poäng, assists, returer, steals och blocks.
- *
- * användaren kan välja ett lag från en dropdown, 
- * och då får man upp de 15 bästa spelarna baserat på PPG(points) som visas i en lista.
- *
- * @returns {JSX.Element} en komponent som visar spelarnas stats för ett specifikt valt lag.
- */
 const PlayerPage = () => {
   const [playersStats, setPlayersStats] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState(teams[0].id);
-
-  const loadPlayerStats = useCallback(async () => {
-    const data = await fetchPlayersStats(selectedTeam);
-
-    if (Array.isArray(data) && data.length > 0) {
-      const playerStatsMap = {};
-
-      data.forEach(stat => {
-        const playerId = stat.player?.id;
-
-        if (!playerStatsMap[playerId]) {
-          playerStatsMap[playerId] = {
-            id: playerId,
-            name: `${stat.player?.firstname || "Unknown"} ${stat.player?.lastname || ""}`.trim(),
-            team: stat.team?.name || "Unknown",
-            position: stat.pos !== "N/A" ? stat.pos : "Unknown",
-            gamesPlayed: 0,
-            totalPoints: 0,
-            assists: 0,
-            rebounds: 0,
-            steals: 0,
-            blocks: 0,
-          };
-        }
-
-        playerStatsMap[playerId].gamesPlayed += 1;
-        playerStatsMap[playerId].totalPoints += stat.points ?? 0;
-        playerStatsMap[playerId].assists += stat.assists ?? 0;
-        playerStatsMap[playerId].rebounds += stat.totReb ?? 0;
-        playerStatsMap[playerId].steals += stat.steals ?? 0;
-        playerStatsMap[playerId].blocks += stat.blocks ?? 0;
-      });
-
-      const formattedPlayers = Object.values(playerStatsMap)
-        .map(player => ({
-          ...player,
-          ppg: (player.gamesPlayed > 0 ? player.totalPoints / player.gamesPlayed : 0).toFixed(1),
-          assistsPerGame: (player.assists / player.gamesPlayed || 0).toFixed(1),
-          reboundsPerGame: (player.rebounds / player.gamesPlayed || 0).toFixed(1),
-          stealsPerGame: (player.steals / player.gamesPlayed || 0).toFixed(1),
-          blocksPerGame: (player.blocks / player.gamesPlayed || 0).toFixed(1),
-        }))
-        .sort((a, b) => parseFloat(b.ppg) - parseFloat(a.ppg))
-        .slice(0, 15);
-
-      setPlayersStats(formattedPlayers);
-    } else {
-      setPlayersStats([]);
-    }
-  }, [selectedTeam]);
+  const [loading, setLoading] = useState(true);
 
   useEffect(() => {
+    const loadPlayerStats = async () => {
+      setLoading(true);
+      const data = await fetchPlayersStats(selectedTeam);
+      console.log("Fetched Player Data:", data);
+
+      if (Array.isArray(data) && data.length > 0) {
+        const uniquePlayers = new Set();
+        const formattedPlayers = data
+          .filter(stat => {
+            const playerId = stat.player.id;
+            if (uniquePlayers.has(playerId)) {
+              return false;
+            }
+            uniquePlayers.add(playerId);
+            return true;
+          })
+          .map(stat => ({
+            id: stat.player.id,
+            name: `${stat.player.firstname} ${stat.player.lastname}`,
+            position: stat.pos !== "N/A" ? stat.pos : "Unknown",
+            ppg: stat.points || 0,
+            assists: stat.assists || 0,
+            rebounds: stat.totReb || 0,
+            image: stat.player.photo || "https://via.placeholder.com/50"
+          }));
+
+        setPlayersStats(formattedPlayers);
+      } else {
+        setPlayersStats([]);
+      }
+      setLoading(false);
+    };
+
     loadPlayerStats();
-  }, [selectedTeam, loadPlayerStats]);
+  }, [selectedTeam]);
 
   return (
-    <div>
+    <div style={{ padding: "20px", fontFamily: "Arial, sans-serif" }}>
       <h2>NBA Player Stats (2024 Season)</h2>
 
-      <label htmlFor="teamSelect">Select a Team: </label>
-      <select
-        id="teamSelect"
-        value={selectedTeam}
-        onChange={(e) => setSelectedTeam(Number(e.target.value))}
-      >
-        {teams.map((team) => (
-          <option key={team.id} value={team.id}>
-            {team.name}
-          </option>
-        ))}
-      </select>
+      {/* Team Selector */}
+      <div style={{ display: "flex", alignItems: "center", gap: "10px", marginBottom: "20px" }}>
+        <label htmlFor="teamSelect" style={{ fontWeight: "bold" }}>Select a Team:</label>
+        <select
+          id="teamSelect"
+          value={selectedTeam}
+          onChange={(e) => setSelectedTeam(Number(e.target.value))}
+          style={{ padding: "10px", fontSize: "16px", borderRadius: "5px", cursor: "pointer" }}
+        >
+          {teams.map((team) => (
+            <option key={team.id} value={team.id}>
+              {team.name}
+            </option>
+          ))}
+        </select>
+        {/* Team Logo */}
+        <img 
+          src={teams.find(team => team.id === selectedTeam)?.logo} 
+          alt="Team Logo" 
+          style={{ width: "50px", height: "50px", objectFit: "contain", background: "#f8f8f8", borderRadius: "5px" }} 
+          onError={(e) => e.target.src = "https://via.placeholder.com/50?text=No+Logo"}
+        />
+      </div>
 
-      {playersStats.length === 0 ? (
+      {/* Player List */}
+      {loading ? (
         <p>Loading player stats...</p>
       ) : (
-        <ul>
-          {playersStats.map((player, index) => (
-            <li key={index}>
-              <strong>{player.name}</strong> <br />
-              Team: {player.team} <br />
-              Position: {player.position} <br />
-              PPG: {player.ppg} <br />
-              Assists per game: {player.assistsPerGame} <br />
-              Rebounds per game: {player.reboundsPerGame} <br />
-              Steals per game: {player.stealsPerGame} <br />
-              Blocks per game: {player.blocksPerGame} <br />
-            </li>
-          ))}
+        <ul style={{ listStyleType: "none", padding: 0 }}>
+          {playersStats.length === 0 ? (
+            <p>No players found for this team.</p>
+          ) : (
+            playersStats.map((player) => (
+              <li key={player.id} style={{ display: "flex", alignItems: "center", padding: "10px", borderBottom: "1px solid #ddd" }}>
+                <img 
+                  src={player.image} 
+                  alt={player.name} 
+                  style={{ width: "50px", height: "50px", borderRadius: "50%", marginRight: "10px" }}
+                  onError={(e) => e.target.src = "https://via.placeholder.com/50?text=No+Image"}
+                />
+                <div>
+                  <strong>{player.name}</strong> ({player.position}) <br />
+                  PPG: {player.ppg} | Assists: {player.assists} | Rebounds: {player.rebounds}
+                </div>
+              </li>
+            ))
+          )}
         </ul>
       )}
     </div>

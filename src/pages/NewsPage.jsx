@@ -1,12 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchNews } from "../api/nbaNewsApi";
+import './NewsPage.css';
 
-/**
- * NewsPage fetchar de senaste nba-nyheterna från ett api.
- * den fetchar nyheterna när sidan laddas och visar dem i en lista.
- *
- * @returns {JSX.Element} en komponent som visar nyhetsartiklar
- */
 const NewsPage = () => {
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
@@ -18,7 +13,7 @@ const NewsPage = () => {
             setError(null);
 
             try {
-                const articles = await fetchNews(20);
+                const articles = await fetchNews(10);
                 console.log("Received articles:", articles);
                 setNews(articles);
             } catch (err) {
@@ -32,17 +27,17 @@ const NewsPage = () => {
     }, []);
 
     return (
-        <div>
-            <h2>NBA Latest News</h2>
-            {loading && <p>Loading news...</p>}
-            {error && <p style={{ color: "red" }}>{error}</p>}
+        <div className="news-container">
+            <h2 className="news-header">NBA Latest News</h2>
+            {loading && <p className="loading-message">Loading news...</p>}
+            {error && <p className="error-message">{error}</p>}
             {!loading && !error && (
                 <ul>
                     {news.map((article, index) => (
-                        <li key={index}>
-                            <h3>{article.title}</h3>
-                            <p><strong>Source:</strong> {article.source}</p>
-                            <a href={article.url} target="_blank">
+                        <li key={index} className="news-article">
+                            <h3 className="article-title">{article.title}</h3>
+                            <p className="article-source"><strong>Source:</strong> {article.source}</p>
+                            <a className="article-link" href={article.url} target="_blank" rel="noopener noreferrer">
                                 Read Full Article
                             </a>
                         </li>

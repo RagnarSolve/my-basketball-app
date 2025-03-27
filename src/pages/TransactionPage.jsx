@@ -34,13 +34,6 @@ const teams = [
   { id: 34, name: "Washington Wizards" }
 ];
 
-/**
- * TransactionPage visar spelarövergångar och kontraktsändringar för ett valt nba-lag.
- * användaren kan välja ett lag i en dropdown och se övergångar för åren 2024 och 2025.
- * datan hämtas från ett api och visas sorterat efter datum.
- *
- * @returns {JSX.Element} en sida som visar övergånghistorik per lag och år
- */
 const TransactionPage = () => {
     const [selectedTeam, setSelectedTeam] = useState(1);
     const [transactions2025, setTransactions2025] = useState([]);
@@ -70,7 +63,7 @@ const TransactionPage = () => {
     }, [selectedTeam]);
 
     return (
-        <div>
+        <div className="transaction-container">
             <h1>Transactions History</h1>
             <p>Select a team to view transaction history.</p>
 
@@ -83,35 +76,30 @@ const TransactionPage = () => {
                 ))}
             </select>
 
-            {loading && <p>Loading transactions...</p>}
+            {loading && <p className="loading-message">Loading transactions...</p>}
 
-            {error && <p style={{ color: "red" }}>{error}</p>}
+            {error && <p className="error-message">{error}</p>}
 
             <h3>2025</h3>
             {transactions2025.length > 0 ? (
-                <>
-                    {transactions2025.map((trade, index) => (
-                        <div key={index}>
-                            <strong>{new Date(trade.date).toDateString()}</strong>: {trade.description}
-                        </div>
-                    ))}
-                </>
+                transactions2025.map((trade, index) => (
+                    <div className="transaction-item" key={index}>
+                        <strong>{new Date(trade.date).toDateString()}</strong>: {trade.description}
+                    </div>
+                ))
             ) : (
-                !loading && <p>No trades found for this team in 2025.</p>
+                !loading && <p className="no-data">No trades found for this team in 2025.</p>
             )}
 
-        
             <h3>2024</h3>
             {transactions2024.length > 0 ? (
-                <div>
-                    {transactions2024.map((trade, index) => (
-                        <div key={index}>
-                            <strong>{new Date(trade.date).toDateString()}</strong>: {trade.description}
-                        </div>
-                    ))}
-                </div>
+                transactions2024.map((trade, index) => (
+                    <div className="transaction-item" key={index}>
+                        <strong>{new Date(trade.date).toDateString()}</strong>: {trade.description}
+                    </div>
+                ))
             ) : (
-                !loading && <p>No trades found for this team in 2024.</p>
+                !loading && <p className="no-data">No trades found for this team in 2024.</p>
             )}
         </div>
     );
