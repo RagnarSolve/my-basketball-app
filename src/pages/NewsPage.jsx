@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { fetchNews } from "../api/nbaNewsApi";
-import './styles/NewsPage.css';
+import './NewsPage.css';
 
 /**
  * NewsPage fetchar de senaste nba-nyheterna från ett api.

@@ -1,18 +1,12 @@
 import { useEffect, useState } from "react";
 import { fetchLiveGames } from "../api/nbaApi";
 import { fetchNews } from "../api/nbaNewsApi";
-import './styles/HomePage.css';
 
 
-/**
- * HomePage är startsidan.
- * Den innehåller en bildslider, live-matcher, och de senaste nyheterna från nba.
- *
- * @returns {JSX.Element} startsidan med nyheter, bildslider och live-matcher
- */
 const HomePage = () => {
     const [liveGames, setLiveGames] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
+    //for the news
     const [news, setNews] = useState([]);
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(null);
@@ -38,21 +32,21 @@ const HomePage = () => {
     useEffect(() => {
         const interval = setInterval(() => {
             setCurrentIndex((prevIndex) => (prevIndex + 1) % images.length);
-        }, 5000); // Ändrar bild varje femte sekund.
+        }, 5000); // Change image every 5 seconds
 
-        return () => clearInterval(interval);
+        return () => clearInterval(interval); 
     }, []);
 
 
 
-    //nyhets-delen
+    //news part
     useEffect(() => {
         const loadNews = async () => {
             setLoading(true);
             setError(null);
 
             try {
-                const articles = await fetchNews(5);
+                const articles = await fetchNews(10);
                 console.log("Received articles:", articles);
                 setNews(articles);
             } catch (err) {
@@ -64,13 +58,13 @@ const HomePage = () => {
 
         loadNews();
     }, []);
-
+    
 
     return (
-        <div id="HomePage">
+        <div id="HomePage" style={{display:"flex", backgroundColor: "lightgray", margin: "50px", paddingTop: "20px"}}>
+            
 
-
-            <div id="homePicture" style={{ position: "relative", width: "100%", maxWidth: "1000px", height: "550px", overflow: "hidden" }}>
+            <div id="homePicture" style={{ position: "relative", width: "100%", maxWidth: "1000px",height: "auto", overflow: "hidden" }}>
                 {images.map((src, index) => (
                     <img
                         key={index}
@@ -86,43 +80,31 @@ const HomePage = () => {
                         }}
                     />
                 ))}
+                
             </div>
+           
+            <div id="news" style={{display: "flex", margin:"2rem"}}>
 
-            <div id="news">
-                <h2>NBA Latest News</h2>
-                {loading && <p>Loading news...</p>}
-                {error && <p style={{ color: "red" }}>{error}</p>}
-                {!loading && !error && (
-                    <ul>
-                        {news.map((article, index) => (
-                            <li key={index}>
-                                <h3>{article.title}</h3>
-                                <p><strong>Source:</strong> {article.source}</p>
-                                <a href={article.url} target="_blank">
-                                    Read Full Article
-                                </a>
-                            </li>
-                        ))}
-                    </ul>
-                )}
-            </div>
-            <h3>Live NBA Games</h3>
-            {liveGames.length > 0 ? (
+            {loading && <p>Loading news...</p>}
+            {error && <p style={{ color: "red" }}>{error}</p>}
+            {!loading && !error && (
                 <ul>
-                    {liveGames.map((game, index) => (
-                        <li key={index}>
-                            {game.teams.home.name} vs {game.teams.visitors.name}
-                            <br />
-                            Score: {game.scores.home.points} - {game.scores.visitors.points}
-                            <br />
-                            Status: {game.status.long}
+                     <h2 style={{font:"500", color:"brown"}}>NBA Latest News</h2>
+                    {news.map((article, index) => (
+                        <li  key={index} style={{}}>
+                            <h3>{article.title}</h3>
+                            <p><strong>Source:</strong> {article.source}</p>
+                            <a href={article.url} target="_blank">
+                                Read Full Article
+                            </a>
                         </li>
                     ))}
                 </ul>
-            ) : (
-                <p>No live games currently.</p>
             )}
+        </div>
 
+          
+            
         </div>
     );
 };
