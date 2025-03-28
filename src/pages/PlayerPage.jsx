@@ -20,6 +20,16 @@ const teams = [
   { id: 40, name: "Utah Jazz" }, { id: 41, name: "Washington Wizards" }
 ];
 
+/**
+ * PlayerPage visar stats för spelare baserat på det lag användaren väljer.
+ * datan hämtas från ett api och sedan sammanställs det i snitt per spelare på en hel säsong,
+ * inklusive poäng, assists, returer, steals och blocks.
+ *
+ * användaren kan välja ett lag från en dropdown, 
+ * och då får man upp de 15 bästa spelarna baserat på PPG(points) som visas i en lista.
+ *
+ * @returns {JSX.Element} en komponent som visar spelarnas stats för ett specifikt valt lag.
+ */
 const PlayerPage = () => {
   const [playersStats, setPlayersStats] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState(teams[0].id);

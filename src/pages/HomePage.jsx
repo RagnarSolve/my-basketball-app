@@ -2,7 +2,12 @@ import { useEffect, useState } from "react";
 import { fetchLiveGames } from "../api/nbaApi";
 import { fetchNews } from "../api/nbaNewsApi";
 
-
+/**
+ * HomePage är startsidan.
+ * Den innehåller en bildslider, live-matcher, och de senaste nyheterna från nba.
+ *
+ * @returns {JSX.Element} startsidan med nyheter, bildslider och live-matcher
+ */
 const HomePage = () => {
     const [liveGames, setLiveGames] = useState([]);
     const [currentIndex, setCurrentIndex] = useState(0);
