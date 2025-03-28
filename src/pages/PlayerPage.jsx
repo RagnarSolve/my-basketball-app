@@ -1,5 +1,6 @@
 import { useEffect, useState, useCallback } from "react";
 import { fetchPlayersStats } from "../api/nbaApi";
+import './PlayerPage.css';
 
 const teams = [
   { id: 1, name: "Atlanta Hawks"}, { id: 2, name: "Boston Celtics" },
@@ -19,16 +20,6 @@ const teams = [
   { id: 40, name: "Utah Jazz" }, { id: 41, name: "Washington Wizards" }
 ];
 
-/**
- * PlayerPage visar stats för spelare baserat på det lag användaren väljer.
- * datan hämtas från ett api och sedan sammanställs det i snitt per spelare på en hel säsong,
- * inklusive poäng, assists, returer, steals och blocks.
- *
- * användaren kan välja ett lag från en dropdown, 
- * och då får man upp de 15 bästa spelarna baserat på PPG(points) som visas i en lista.
- *
- * @returns {JSX.Element} en komponent som visar spelarnas stats för ett specifikt valt lag.
- */
 const PlayerPage = () => {
   const [playersStats, setPlayersStats] = useState([]);
   const [selectedTeam, setSelectedTeam] = useState(teams[0].id);
@@ -37,13 +28,13 @@ const PlayerPage = () => {
     const data = await fetchPlayersStats(selectedTeam);
 
     if (Array.isArray(data) && data.length > 0) {
-      const playerStatsMap = {};
+      const latestTeamPlayers = {};
 
       data.forEach(stat => {
         const playerId = stat.player?.id;
 
-        if (!playerStatsMap[playerId]) {
-          playerStatsMap[playerId] = {
+        if (!latestTeamPlayers[playerId]) {
+          latestTeamPlayers[playerId] = {
             id: playerId,
             name: `${stat.player?.firstname || "Unknown"} ${stat.player?.lastname || ""}`.trim(),
             team: stat.team?.name || "Unknown",
@@ -57,15 +48,15 @@ const PlayerPage = () => {
           };
         }
 
-        playerStatsMap[playerId].gamesPlayed += 1;
-        playerStatsMap[playerId].totalPoints += stat.points ?? 0;
-        playerStatsMap[playerId].assists += stat.assists ?? 0;
-        playerStatsMap[playerId].rebounds += stat.totReb ?? 0;
-        playerStatsMap[playerId].steals += stat.steals ?? 0;
-        playerStatsMap[playerId].blocks += stat.blocks ?? 0;
+        latestTeamPlayers[playerId].gamesPlayed += 1;
+        latestTeamPlayers[playerId].totalPoints += stat.points ?? 0;
+        latestTeamPlayers[playerId].assists += stat.assists ?? 0;
+        latestTeamPlayers[playerId].rebounds += stat.totReb ?? 0;
+        latestTeamPlayers[playerId].steals += stat.steals ?? 0;
+        latestTeamPlayers[playerId].blocks += stat.blocks ?? 0;
       });
 
-      const formattedPlayers = Object.values(playerStatsMap)
+      const formattedPlayers = Object.values(latestTeamPlayers)
         .map(player => ({
           ...player,
           ppg: (player.gamesPlayed > 0 ? player.totalPoints / player.gamesPlayed : 0).toFixed(1),
@@ -88,40 +79,48 @@ const PlayerPage = () => {
   }, [selectedTeam, loadPlayerStats]);
 
   return (
-    <div>
-      <h2>NBA Player Stats (2024 Season)</h2>
+    <div style={{ display:"flex", backgroundColor: "lightgray", margin: "50px", paddingTop: "50px"}}>
+      <div>
+        <img src="https://mir-s3-cdn-cf.behance.net/project_modules/hd/dd6b9795847219.5ea0ca5e4f6ef.jpg" alt="" width="550px"
+        height="900px"  />
+      </div>
 
-      <label htmlFor="teamSelect">Select a Team: </label>
-      <select
-        id="teamSelect"
-        value={selectedTeam}
-        onChange={(e) => setSelectedTeam(Number(e.target.value))}
-      >
-        {teams.map((team) => (
-          <option key={team.id} value={team.id}>
-            {team.name}
-          </option>
-        ))}
-      </select>
+      <div style={{backgroundColor: "white", margin:"2rem", width:"50%", justifyContent:"center"}}>
+      <h2 style={{color:"brown", margin:"20px"}}>NBA Player Stats (2024 Season)</h2>
 
-      {playersStats.length === 0 ? (
-        <p>Loading player stats...</p>
-      ) : (
-        <ul>
-          {playersStats.map((player, index) => (
-            <li key={index}>
-              <strong>{player.name}</strong> <br />
-              Team: {player.team} <br />
-              Position: {player.position} <br />
-              PPG: {player.ppg} <br />
-              Assists per game: {player.assistsPerGame} <br />
-              Rebounds per game: {player.reboundsPerGame} <br />
-              Steals per game: {player.stealsPerGame} <br />
-              Blocks per game: {player.blocksPerGame} <br />
-            </li>
-          ))}
-        </ul>
-      )}
+<label htmlFor="teamSelect">Select a Team: </label>
+<select
+  id="teamSelect"
+  value={selectedTeam}
+  onChange={(e) => setSelectedTeam(Number(e.target.value))}
+>
+  {teams.map((team) => (
+    <option key={team.id} value={team.id}>
+      {team.name}
+    </option>
+  ))}
+</select>
+
+{playersStats.length === 0 ? (
+  <p>Loading player stats...</p>
+) : (
+  <ul>
+    {playersStats.map((player, index) => (
+      <li key={index} style={{gap:"2 rem", color:"black", margin:"20px"}} >
+        <strong>{player.name}</strong> <br />
+        Team: {player.team} <br />
+        Position: {player.position} <br />
+        PPG: {player.ppg} <br />
+        Assists per game: {player.assistsPerGame} <br />
+        Rebounds per game: {player.reboundsPerGame} <br />
+        Steals per game: {player.stealsPerGame} <br />
+        Blocks per game: {player.blocksPerGame} <br />
+      </li>
+    ))}
+  </ul>
+)}
+      </div>
+      
     </div>
   );
 };

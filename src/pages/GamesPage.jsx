@@ -1,5 +1,7 @@
 import { useEffect, useState } from "react";
 import { fetchGames } from "../api/nbaApi";
+import './GamesPage.css';
+
 
 /**
  * GamesPage är en sida som visar det senaste resultatet för varje nba-lag.
@@ -42,31 +44,60 @@ const GamesPage = () => {
     if (!games.length) return <p>Loading latest completed game results...</p>;
 
     return (
-        <div>
-            <h2>NBA Latest Game Results</h2>
-            
-                {games.map((game, index) => {
-                    const homeTeam = game?.teams?.home?.name || "Unknown Team";
-                    const awayTeam = game?.teams?.visitors?.name || "Unknown Team";
-                    const homeScore = game?.scores?.home?.points ?? "N/A";
-                    const awayScore = game?.scores?.visitors?.points ?? "N/A";
-                    const gameDate = game?.date?.start ? new Date(game.date.start).toLocaleDateString() : "N/A";
+        
+        <div style={{display:"flex", justifyContent:"center", paddingTop: "20px"}}>
+            <div id="gamesImg">
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1729602431.jpg" alt="" width="500px" height="auto" /></div>
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1704458791.jpg" alt="" width="500px" height="auto" /></div>
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1695812676.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1683193981.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1686666102.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1729602431.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1729602431.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1677571864.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1677572611.jpg" alt="" width="500px" height="auto" /></div>                
 
-                    let winner;
-                    if (homeScore !== "N/A" && awayScore !== "N/A") {
-                        winner = homeScore > awayScore ? homeTeam : awayTeam;
-                    }
+            </div>
 
-                    return (
-                        <div id="game-results" key={index}>
-                            <strong>{homeTeam} vs {awayTeam}</strong> <br />
-                            Date: {gameDate} <br />
-                            Final Score: {homeScore} - {awayScore} <br />
-                            Winner: <strong>{winner}</strong>
-                        </div>
-                    );
-                })}
+            <div id= "GamesPage" style={{display:"flex", backgroundColor: "lightgray", margin: "50px"}}>
+            <h2>🏀 NBA Latest Game Results</h2>
+
+{games.map((game, index) => {
+    const homeTeam = game?.teams?.home?.name || "Unknown Team";
+    const awayTeam = game?.teams?.visitors?.name || "Unknown Team";
+    const homeScore = game?.scores?.home?.points ?? "N/A";
+    const awayScore = game?.scores?.visitors?.points ?? "N/A";
+    const gameDate = game?.date?.start ? new Date(game.date.start).toLocaleDateString() : "N/A";
+
+    let winner;
+    if (homeScore !== "N/A" && awayScore !== "N/A") {
+        winner = homeScore > awayScore ? homeTeam : awayTeam;
+    }
+
+    return (
+        <div className="game-result" key={index}>
+            <h3> {homeTeam} vs {awayTeam}</h3>
+            <p>📅 <strong>Date:</strong> {gameDate}</p>
+            <p>📊 <strong>Final Score:</strong> {homeScore} - {awayScore}</p>
+            <p>🏆 <strong>Winner:</strong> {winner}</p>
+        </div>
+    );
+})}
+
+            </div>
             
+            <div id="gamesImg">
+            <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1718694131.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1729602431.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1729602431.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1715165719.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1729602431.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1729602431.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1729602431.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1729602431.jpg" alt="" width="500px" height="auto" /></div>                
+                <div><img src="https://spain.id.nba.com/storage/images/wallpapers/1729602431.jpg" alt="" width="500px" height="auto" /></div>                
+
+            </div>
         </div>
     );
 };

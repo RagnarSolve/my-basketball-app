@@ -5,7 +5,7 @@ import StandingsPage from "../pages/StandingsPage";
 import PlayerPage from "../pages/PlayerPage";
 import NewsPage from "../pages/NewsPage";
 import TransactionPage from "../pages/TransactionPage";
-import SecondaryNav from "./SecondaryNav"; 
+import SecondaryNav from "./SecondaryNav";
 import PrimaryNav from "./PrimaryNav";
 import "./MainContent.css";
 

@@ -52,6 +52,6 @@ const fetchTransactionsByTeamAndYear = async (teamId, year) => {
 export const fetchTransactionByTeam = async (teamId) => {
     const transactions2025 = await fetchTransactionsByTeamAndYear(teamId, 2025);
     const transactions2024 = await fetchTransactionsByTeamAndYear(teamId, 2024);
-    
+
     return { transactions2025, transactions2024 };
 };
