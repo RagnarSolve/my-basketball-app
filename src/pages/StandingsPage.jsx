@@ -1,6 +1,12 @@
 import { useEffect, useState } from "react";
 import { fetchStandings } from "../api/nbaApi";
 
+/**
+ * StandingsPage visar nba-tabellen för säsongen 2024–25.
+ * datan fetchas från ett api och sorteras efter antal vinster.
+ *
+ * @returns {JSX.Element} en lista med tabellen ifrån säsong 2024-25
+ */
 const StandingsPage = () => {
     const [standings, setStandings] = useState([]);
     const [error, setError] = useState(null);
